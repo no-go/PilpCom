@@ -26,17 +26,21 @@ Names and design is different to the original app and interface. I not want any 
 
 ## Screenshots
 
-Date, time, vibration detection
+Date, time, vibration detection.
+
 ![Clk](img/clk.jpg)
 
-Contacts are selectable to send sms or do a call
+Contacts are selectable to send sms or do a call.
+
 ![Who](img/who.jpg)
 
 Try to list the last messages. Non SMS messages needs special notifications access.
 ![Msg](img/msg.jpg)
 
 Display a OSM map in green. It tries to get GPS location, orientation and speed. Set the zoom factor in the preferences.
+
 ![Area](img/area.jpg)
 
 Radio displays a RSS feed. You can set the url in preferences. Four internet radio stations are selectable.
+
 ![news](img/news.jpg)
