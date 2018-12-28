@@ -1,0 +1,102 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorPrimaryDark"
+    android:orientation="vertical"
+    tools:context=".NewsFragment">
+
+    <Button
+        android:id="@+id/classicBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/c64pro_mono"
+        android:layout_marginTop="@dimen/activity_vertical_margin"
+        android:textSize="16dp"
+        android:textColor="@color/colorAccent"
+        android:text="@string/classic_radio"
+        android:textAlignment="gravity"
+        android:gravity="center_vertical"
+        android:minHeight="0dp"
+        android:paddingStart="@dimen/activity_horizontal_margin"
+        android:paddingEnd="@dimen/activity_horizontal_margin"
+        android:background="@android:color/transparent"
+        android:textAllCaps="false"
+        android:layout_marginBottom="1dp"
+        />
+
+    <Button
+        android:id="@+id/diamondBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/c64pro_mono"
+        android:textSize="16dp"
+        android:textColor="@color/colorAccent"
+        android:text="@string/diamond_radio"
+        android:textAlignment="gravity"
+        android:gravity="center_vertical"
+        android:minHeight="0dp"
+        android:paddingStart="@dimen/activity_horizontal_margin"
+        android:paddingEnd="@dimen/activity_horizontal_margin"
+        android:background="@android:color/transparent"
+        android:textAllCaps="false"
+        android:layout_marginBottom="1dp"
+        />
+
+    <Button
+        android:id="@+id/ostBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/c64pro_mono"
+        android:textSize="16dp"
+        android:textColor="@color/colorAccent"
+        android:text="@string/ost_radio"
+        android:textAlignment="gravity"
+        android:gravity="center_vertical"
+        android:minHeight="0dp"
+        android:paddingStart="@dimen/activity_horizontal_margin"
+        android:paddingEnd="@dimen/activity_horizontal_margin"
+        android:background="@android:color/transparent"
+        android:textAllCaps="false"
+        android:layout_marginBottom="1dp"
+        />
+
+    <Button
+        android:id="@+id/generalBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/c64pro_mono"
+        android:textSize="16dp"
+        android:textColor="@color/colorAccent"
+        android:text="@string/general_radio"
+        android:textAlignment="gravity"
+        android:gravity="center_vertical"
+        android:minHeight="0dp"
+        android:paddingStart="@dimen/activity_horizontal_margin"
+        android:paddingEnd="@dimen/activity_horizontal_margin"
+        android:background="@android:color/transparent"
+        android:textAllCaps="false"
+        android:layout_marginBottom="@dimen/activity_horizontal_margin"
+        />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/scrollView" >
+
+
+            <TextView
+                android:id="@+id/section_news"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/c64pro_mono"
+                android:textSize="11dp"
+                android:textColor="@color/colorAccent"
+                android:background="@color/colorPrimary"
+                android:layout_marginBottom="@dimen/activity_vertical_margin"
+                android:layout_marginEnd="@dimen/activity_horizontal_margin"
+                android:layout_marginStart="@dimen/activity_horizontal_margin"
+                android:paddingBottom="60dp" />
+
+    </ScrollView>
+</LinearLayout>

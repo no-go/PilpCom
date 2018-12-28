@@ -1,0 +1,43 @@
+<resources>
+    <string name="app_name">PilpCom</string>
+    <string name="tab_text_1">Clk</string>
+    <string name="tab_text_2">Who</string>
+    <string name="tab_text_3">Msg</string>
+    <string name="tab_text_4">Area</string>
+    <string name="tab_text_5">News</string>
+    <string name="action_settings">Settings</string>
+    <string name="different">Different</string>
+    <string name="rss_url">News RSS URL</string>
+    <string name="display_limit">Data display limit</string>
+    <string name="date_format">yyyyMMdd HH:mm:ss</string>
+    <string name="date_format2">yyyy-MM-dd\nEEEE</string>
+    <string name="time_format">HH:mm.ss</string>
+    <string name="map_zoomlevel">Map zoomlevel</string>
+    <string name="chat">Leave empty to call!</string>
+    <string name="ok">ok</string>
+    <string name="cancel">cancel</string>
+
+    <string name="classic_radio">Classic Station</string>
+    <string name="diamond_radio">Swing 50th Radio</string>
+    <string name="general_radio">General Twist</string>
+    <string name="ost_radio">Orient Peak</string>
+
+    <string-array name="quality_names">
+        <item>outer conurbation area</item>
+        <item>city</item>
+        <item>township</item>
+        <item>neighborhood</item>
+        <item>street</item>
+        <item>bathroom</item>
+    </string-array>
+
+    <string-array name="quality_values">
+        <item>13</item>
+        <item>14</item>
+        <item>15</item>
+        <item>16</item>
+        <item>17</item>
+        <item>18</item>
+    </string-array>
+
+</resources>

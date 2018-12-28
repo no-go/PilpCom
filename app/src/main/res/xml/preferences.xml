@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <PreferenceCategory android:title="@string/tab_text_5">
+        <EditTextPreference
+            android:key="rss_url"
+            android:inputType="text"
+            android:defaultValue="https://www.deutschlandfunk.de/die-nachrichten.353.de.rss"
+            android:title="@string/rss_url" />
+
+        <EditTextPreference
+            android:key="classic_url"
+            android:inputType="text"
+            android:defaultValue="http://fallout.fm:8000/falloutfm7.ogg"
+            android:title="@string/classic_radio" />
+
+        <EditTextPreference
+            android:key="diamond_url"
+            android:inputType="text"
+            android:defaultValue="http://fallout.fm:8000/falloutfm6.ogg"
+            android:title="@string/diamond_radio" />
+
+        <EditTextPreference
+            android:key="ost_url"
+            android:inputType="text"
+            android:defaultValue="http://fallout.fm:8000/falloutfm4.ogg"
+            android:title="@string/ost_radio" />
+
+        <EditTextPreference
+            android:key="general_url"
+            android:inputType="text"
+            android:defaultValue="http://fallout.fm:8000/falloutfm10.ogg"
+            android:title="@string/general_radio" />
+
+    </PreferenceCategory>
+
+    <PreferenceCategory android:title="@string/different">
+
+    <EditTextPreference
+        android:key="display_limit"
+        android:inputType="numberDecimal"
+        android:defaultValue="25"
+        android:numeric="integer"
+        android:title="@string/display_limit" />
+
+    <ListPreference
+        android:key="zoomlevel"
+        android:defaultValue="17"
+        android:entries="@array/quality_names"
+        android:entryValues="@array/quality_values"
+        android:title="@string/map_zoomlevel" />
+
+    </PreferenceCategory>
+
+</PreferenceScreen>
