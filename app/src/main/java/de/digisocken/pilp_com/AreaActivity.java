@@ -45,7 +45,7 @@ public class AreaActivity extends AppCompatActivity implements LocationListener 
     private NotificationReceiver nReceiver;
 
     private static String PROVIDER;
-    private LocationManager locationManager;
+
     public static SharedPreferences pref;
 
     private TextView posView;
@@ -94,7 +94,7 @@ public class AreaActivity extends AppCompatActivity implements LocationListener 
         //map.setBuiltInZoomControls(true);
         //map.setMultiTouchControls(true);
 
-        locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+        PilpApp.locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
         int fine = ActivityCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.ACCESS_FINE_LOCATION);
         if (fine != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(
@@ -104,7 +104,7 @@ public class AreaActivity extends AppCompatActivity implements LocationListener 
             );
         } else {
             PROVIDER = LocationManager.GPS_PROVIDER;
-            locationManager.requestLocationUpdates(
+            PilpApp.locationManager.requestLocationUpdates(
                     PROVIDER,
                     GPSREFRESH,
                     0,
@@ -177,7 +177,7 @@ public class AreaActivity extends AppCompatActivity implements LocationListener 
             case LOCATION_PERMISSIONS_REQUEST: {
                 if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                     PROVIDER = LocationManager.GPS_PROVIDER;
-                    locationManager.requestLocationUpdates(
+                    PilpApp.locationManager.requestLocationUpdates(
                             PROVIDER,
                             GPSREFRESH,
                             0,
@@ -185,7 +185,7 @@ public class AreaActivity extends AppCompatActivity implements LocationListener 
                     );
                 } else {
                     PROVIDER = LocationManager.NETWORK_PROVIDER;
-                    locationManager.requestLocationUpdates(
+                    PilpApp.locationManager.requestLocationUpdates(
                             PROVIDER,
                             GPSREFRESH,
                             0,
@@ -310,7 +310,7 @@ public class AreaActivity extends AppCompatActivity implements LocationListener 
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        locationManager.removeUpdates(this);
+        PilpApp.locationManager.removeUpdates(this);
         finishAffinity();
     }
 }
