@@ -16,14 +16,6 @@
     <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 
-    <style name="Base.Widget.Design.TabLayout" parent="android:Widget" tools:ignore="PrivateResource">
-        <item name="tabIndicatorColor">?attr/colorAccent</item>
-        <item name="tabIndicatorHeight">2dp</item>
-        <item name="tabPaddingStart">12dp</item>
-        <item name="tabPaddingEnd">12dp</item>
-        <item name="tabBackground">?attr/selectableItemBackground</item>
-    </style>
-
     <style name="customBarStyle">
         <item name="android:textColor">@color/colorAccent</item>
         <item name="android:background">@color/colorPrimary</item>
@@ -35,6 +27,5 @@
         <item name="android:buttonBarStyle">@style/customBarStyle</item>
         <item name="android:buttonBarButtonStyle">@style/customBarStyle</item>
     </style>
-
 
 </resources>

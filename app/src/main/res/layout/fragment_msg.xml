@@ -1,14 +1,11 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/clockBack"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
     android:background="@color/colorPrimaryDarker"
-    android:keepScreenOn="true"
     android:orientation="vertical"
-    android:weightSum="2"
+    android:keepScreenOn="true"
     >
 
     <LinearLayout
@@ -18,18 +15,17 @@
         android:layout_height="wrap_content">
 
         <Button
-            android:id="@+id/ClkBtn1"
             android:layout_weight="1"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:textSize="16dp"
             android:fontFamily="@font/c64pro_mono"
-            android:textColor="@color/colorAccent"
-            android:background="@color/colorPrimaryDark"
+            android:textColor="@color/colorPrimary"
+            android:background="@android:color/transparent"
+            android:onClick="toClk"
             android:text="@string/clk"
             />
         <Button
-            android:id="@+id/WhoBtn1"
             android:layout_weight="1"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -41,19 +37,16 @@
             android:text="@string/who"
             />
         <Button
-            android:id="@+id/MsgBtn1"
             android:layout_weight="1"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:textSize="16dp"
             android:fontFamily="@font/c64pro_mono"
-            android:textColor="@color/colorPrimary"
-            android:background="@android:color/transparent"
-            android:onClick="toMsg"
+            android:textColor="@color/colorAccent"
+            android:background="@color/colorPrimaryDark"
             android:text="@string/msg"
             />
         <Button
-            android:id="@+id/AreaBtn1"
             android:layout_weight="1"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -65,7 +58,6 @@
             android:text="@string/area"
             />
         <Button
-            android:id="@+id/NewsBtn1"
             android:layout_weight="1"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -78,51 +70,24 @@
             />
     </LinearLayout>
 
-    <TextView
-        android:layout_weight="1"
-        android:id="@+id/section_clock"
+    <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:textColor="@color/colorAccent"
-        android:fontFamily="@font/c64pro_mono"
-        android:textAlignment="center"
-        android:textSize="26dp"
-        android:layout_marginBottom="@dimen/activity_vertical_margin"
-        android:layout_marginEnd="@dimen/activity_horizontal_margin"
-        android:layout_marginStart="@dimen/activity_horizontal_margin"
-        android:layout_marginTop="@dimen/activity_vertical_margin" />
+        android:id="@+id/scrollView" >
 
-    <TextView
-        android:layout_weight="1"
-        android:id="@+id/section_clock2"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:textColor="@color/colorAccent"
-        android:fontFamily="@font/c64pro_mono"
-        android:textAlignment="gravity"
-        android:gravity="top|center_horizontal"
-        android:textSize="35dp"
-        android:layout_marginBottom="@dimen/activity_vertical_margin"
-        android:layout_marginEnd="@dimen/activity_horizontal_margin"
-        android:layout_marginStart="@dimen/activity_horizontal_margin"
-        android:layout_marginTop="@dimen/activity_vertical_margin" />
+            <TextView
+                android:id="@+id/section_news"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@color/colorAccent"
+                android:fontFamily="@font/c64pro_mono"
+                android:textSize="12dp"
+                android:layout_marginBottom="@dimen/activity_vertical_margin"
+                android:layout_marginEnd="@dimen/activity_horizontal_margin"
+                android:layout_marginStart="@dimen/activity_horizontal_margin"
+                android:layout_marginTop="@dimen/activity_vertical_margin"
+                android:paddingBottom="60dp" />
 
-    <android.support.design.widget.FloatingActionButton
-        android:id="@+id/fab"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:tint="@color/colorPrimary"
-        android:layout_gravity="end|bottom"
-        android:layout_margin="@dimen/fab_margin"
-        app:srcCompat="@android:drawable/ic_menu_preferences" />
-
-    <!-- android.support.design.widget.FloatingActionButton
-        android:id="@+id/fab2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:tint="@color/colorPrimary"
-        android:layout_gravity="start|bottom"
-        android:layout_margin="@dimen/fab_margin"
-        app:srcCompat="@android:drawable/ic_lock_power_off" / -->
+    </ScrollView>
 
 </LinearLayout>

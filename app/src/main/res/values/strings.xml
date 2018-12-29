@@ -16,7 +16,11 @@
     <string name="diamond_radio">Swing 50th Radio</string>
     <string name="general_radio">General Twist</string>
     <string name="ost_radio">Orient Peak</string>
-    <string name="tab_news">News</string>
+    <string name="clk">Clk</string>
+    <string name="who">Who</string>
+    <string name="msg">Msg</string>
+    <string name="area">Area</string>
+    <string name="news">News</string>
 
     <string-array name="quality_names">
         <item>outer conurbation area</item>

@@ -49,3 +49,6 @@ Display a OSM map in green. It tries to get GPS location, orientation and speed.
 Radio displays a RSS feed. You can set the url in preferences. Four internet radio stations are selectable.
 
 ![news](img/news.jpg)
+
+Language Igbo: green layout.
+Language Hausa: blue layout.

@@ -1,19 +1,27 @@
 package de.digisocken.pilp_com;
 
-import android.app.Activity;
 import android.app.AlertDialog;
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.ContactsContract;
+import android.support.design.widget.FloatingActionButton;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AppCompatActivity;
 import android.telephony.SmsManager;
+import android.util.Log;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ListView;
@@ -21,55 +29,51 @@ import android.widget.ListView;
 import java.util.ArrayList;
 
 
-public class ContactFragment extends Fragment {
-
+public class ContactActivity extends AppCompatActivity {
+    private NotificationReceiver nReceiver;
     private EntryAdapter entryAdapter;
     private ListView entryList;
     private SmsManager smsManager = SmsManager.getDefault();
 
-    private String title;
-    private int page;
-
-    // newInstance constructor for creating fragment with arguments
-    public static ContactFragment newInstance(int page, String title) {
-        ContactFragment fragment = new ContactFragment();
-        Bundle args = new Bundle();
-        args.putInt("someInt", page);
-        args.putString("someTitle", title);
-        fragment.setArguments(args);
-        return fragment;
+    @Override
+    protected void onResume() {
+        super.onResume();
+        IntentFilter filter = new IntentFilter();
+        filter.addAction(PilpApp.BROADCAST_EXIT);
+        registerReceiver(nReceiver, filter);
     }
 
-    public ContactFragment() { }
-
     @Override
-    public String toString() {
-        return title;
+    protected void onPause() {
+        super.onPause();
+        unregisterReceiver(nReceiver);
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        page = getArguments().getInt("someInt", 0);
-        title = getArguments().getString("someTitle");
-    }
 
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_contact, container, false);
+        nReceiver = new NotificationReceiver();
 
-        entryAdapter = new EntryAdapter(getActivity());
-        entryList = (ListView) view.findViewById(R.id.contactList);
+        requestWindowFeature(Window.FEATURE_NO_TITLE);
+        getWindow().setFlags(
+                WindowManager.LayoutParams.FLAG_FULLSCREEN,
+                WindowManager.LayoutParams.FLAG_FULLSCREEN
+        );
+        setContentView(R.layout.fragment_contact);
+
+        entryAdapter = new EntryAdapter(this);
+        entryList = (ListView) findViewById(R.id.contactList);
         entryList.setAdapter(entryAdapter);
         entryList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
              @Override
              public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                  final ContactEntry item = (ContactEntry) adapterView.getItemAtPosition(i);
 
-                 LayoutInflater li = LayoutInflater.from(getActivity());
+                 LayoutInflater li = LayoutInflater.from(ContactActivity.this);
                  View promptsView = li.inflate(R.layout.contactaccess, null);
 
-                 AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(getActivity(), R.style.AlertDialogCustom);
+                 AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(ContactActivity.this, R.style.AlertDialogCustom);
 
                  // set prompts.xml to alertdialog builder
                  alertDialogBuilder.setView(promptsView);
@@ -102,7 +106,7 @@ public class ContactFragment extends Fragment {
                  alertDialog.show();
              }
         });
-        Cursor phones = container.getContext().getContentResolver().query(ContactsContract.CommonDataKinds.Phone.CONTENT_URI, null,null,null, null);
+        Cursor phones = getContentResolver().query(ContactsContract.CommonDataKinds.Phone.CONTENT_URI, null,null,null, null);
         while (phones.moveToNext()) {
             String name = phones.getString(phones.getColumnIndex(ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME));
             String phoneNumber = phones.getString(phones.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER));
@@ -118,7 +122,61 @@ public class ContactFragment extends Fragment {
 
         entryAdapter.sort();
         entryAdapter.notifyDataSetChanged();
+    }
 
-        return view;
+
+    @Override
+    public boolean onKeyUp(int keyCode, KeyEvent event) {
+        switch (keyCode) {
+            case KeyEvent.KEYCODE_K:
+                toClk(null);
+                return true;
+            case KeyEvent.KEYCODE_J:
+                toMsg(null);
+                return true;
+            case KeyEvent.KEYCODE_M:
+                toArea(null);
+                return true;
+            case KeyEvent.KEYCODE_O:
+                toNews(null);
+                return true;
+            default:
+                return super.onKeyUp(keyCode, event);
+        }
+    }
+
+    public void toClk(View view) {
+        Intent intent = new Intent(this, ClockActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+        startActivity(intent);
+    }
+    public void toMsg(View view) {
+        Intent intent = new Intent(this, MsgActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+        startActivity(intent);
+    }
+    public void toArea(View view) {
+        Intent intent = new Intent(this, AreaActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+        startActivity(intent);
+    }
+    public void toNews(View view) {
+        Intent intent = new Intent(this, NewsActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+        startActivity(intent);
+    }
+
+    class NotificationReceiver extends BroadcastReceiver {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            Log.d(getLocalClassName(), "broadcast");
+            if (intent.getBooleanExtra("EXIT", false)) finishAffinity();
+        }
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        finishAffinity();
     }
 }

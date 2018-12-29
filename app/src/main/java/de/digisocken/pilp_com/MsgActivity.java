@@ -1,19 +1,26 @@
 package de.digisocken.pilp_com;
 
-import android.app.Activity;
+import android.content.BroadcastReceiver;
 import android.content.ContentResolver;
 import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.preference.PreferenceManager;
+import android.support.design.widget.FloatingActionButton;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AppCompatActivity;
 import android.text.format.DateFormat;
-import android.view.LayoutInflater;
+import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
-import android.view.ViewGroup;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -24,46 +31,43 @@ import java.util.HashSet;
 import java.util.Set;
 
 
-public class MsgFragment extends Fragment {
-
+public class MsgActivity extends AppCompatActivity {
+    private NotificationReceiver nReceiver;
     private TextView msgText;
     public static SharedPreferences pref;
 
     Handler handler = new Handler();
     int delay = 10000; //milliseconds
-    private String title;
-    private int page;
-
-    // newInstance constructor for creating fragment with arguments
-    public static MsgFragment newInstance(int page, String title) {
-        MsgFragment fragment = new MsgFragment();
-        Bundle args = new Bundle();
-        args.putInt("someInt", page);
-        args.putString("someTitle", title);
-        fragment.setArguments(args);
-        return fragment;
-    }
-
-    public MsgFragment() { }
 
     @Override
-    public String toString() {
-        return title;
+    protected void onResume() {
+        super.onResume();
+        IntentFilter filter = new IntentFilter();
+        filter.addAction(PilpApp.BROADCAST_EXIT);
+        registerReceiver(nReceiver, filter);
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        unregisterReceiver(nReceiver);
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        page = getArguments().getInt("someInt", 0);
-        title = getArguments().getString("someTitle");
-    }
 
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        pref = PreferenceManager.getDefaultSharedPreferences(getContext());
-        // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_plain, container, false);
-        msgText = view.findViewById(R.id.section_news);
+        nReceiver = new NotificationReceiver();
+
+        requestWindowFeature(Window.FEATURE_NO_TITLE);
+        getWindow().setFlags(
+                WindowManager.LayoutParams.FLAG_FULLSCREEN,
+                WindowManager.LayoutParams.FLAG_FULLSCREEN
+        );
+        setContentView(R.layout.fragment_msg);
+
+        pref = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+        msgText = findViewById(R.id.section_news);
 
         handler.postDelayed(new Runnable(){
             public void run(){
@@ -114,11 +118,10 @@ public class MsgFragment extends Fragment {
             msgText.append(smss.get(i));
             msgText.append("\n\n");
         }
-        return view;
     }
 
     private void readSms(ArrayList<String> smss, String box) {
-        ContentResolver contentResolver = getActivity().getContentResolver();
+        ContentResolver contentResolver = getContentResolver();
         Cursor smsInboxCursor = contentResolver.query(Uri.parse(box), null, null, null, null);
         int indexBody = smsInboxCursor.getColumnIndex("body");
         int indexAddress = smsInboxCursor.getColumnIndex("address");
@@ -132,5 +135,60 @@ public class MsgFragment extends Fragment {
                 smss.add(line);
             } while (smsInboxCursor.moveToNext());
         }
+    }
+
+    @Override
+    public boolean onKeyUp(int keyCode, KeyEvent event) {
+        switch (keyCode) {
+            case KeyEvent.KEYCODE_K:
+                toClk(null);
+                return true;
+            case KeyEvent.KEYCODE_I:
+                toWho(null);
+                return true;
+            case KeyEvent.KEYCODE_M:
+                toArea(null);
+                return true;
+            case KeyEvent.KEYCODE_O:
+                toNews(null);
+                return true;
+            default:
+                return super.onKeyUp(keyCode, event);
+        }
+    }
+
+    public void toClk(View view) {
+        Intent intent = new Intent(this, ClockActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+        startActivity(intent);
+    }
+    public void toWho(View view) {
+        Intent intent = new Intent(this, ContactActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+        startActivity(intent);
+    }
+    public void toArea(View view) {
+        Intent intent = new Intent(this, AreaActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+        startActivity(intent);
+    }
+    public void toNews(View view) {
+        Intent intent = new Intent(this, NewsActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+        startActivity(intent);
+    }
+
+    class NotificationReceiver extends BroadcastReceiver {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            Log.d(getLocalClassName(), "broadcast");
+            if (intent.getBooleanExtra("EXIT", false)) finishAffinity();
+        }
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        finishAffinity();
     }
 }

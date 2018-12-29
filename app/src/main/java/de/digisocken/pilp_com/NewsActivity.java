@@ -1,7 +1,9 @@
 package de.digisocken.pilp_com;
 
-import android.app.Activity;
+import android.content.BroadcastReceiver;
 import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
@@ -9,11 +11,18 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.support.design.widget.FloatingActionButton;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AppCompatActivity;
 import android.text.Html;
+import android.util.Log;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.TextView;
 
@@ -30,8 +39,8 @@ import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 
 
-public class NewsFragment extends Fragment {
-
+public class NewsActivity extends AppCompatActivity {
+    private NotificationReceiver nReceiver;
     private TextView txtNews;
     public static SharedPreferences pref;
 
@@ -44,45 +53,43 @@ public class NewsFragment extends Fragment {
     private ArrayList<String> titles;
     private ArrayList<String> description;
 
-    private String title;
-    private int page;
-
-    // newInstance constructor for creating fragment with arguments
-    public static NewsFragment newInstance(int page, String title) {
-        NewsFragment fragment = new NewsFragment();
-        Bundle args = new Bundle();
-        args.putInt("someInt", page);
-        args.putString("someTitle", title);
-        fragment.setArguments(args);
-        return fragment;
+    @Override
+    protected void onResume() {
+        super.onResume();
+        IntentFilter filter = new IntentFilter();
+        filter.addAction(PilpApp.BROADCAST_EXIT);
+        registerReceiver(nReceiver, filter);
     }
 
     @Override
-    public String toString() {
-        return title;
+    protected void onPause() {
+        super.onPause();
+        unregisterReceiver(nReceiver);
     }
-
-    public NewsFragment() { }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        nReceiver = new NotificationReceiver();
+
         mediaPlayer = new MediaPlayer();
         mediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
-        page = getArguments().getInt("someInt", 0);
-        title = getArguments().getString("someTitle");
-    }
 
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        pref = PreferenceManager.getDefaultSharedPreferences(getContext());
-        // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_news, container, false);
-        txtNews = view.findViewById(R.id.section_news);
-        clasicBtn  = view.findViewById(R.id.classicBtn);
-        diamondBtn = view.findViewById(R.id.diamondBtn);
-        ostBtn = view.findViewById(R.id.ostBtn);
-        generalBtn = view.findViewById(R.id.generalBtn);
+        requestWindowFeature(Window.FEATURE_NO_TITLE);
+        getWindow().setFlags(
+                WindowManager.LayoutParams.FLAG_FULLSCREEN,
+                WindowManager.LayoutParams.FLAG_FULLSCREEN
+        );
+        setContentView(R.layout.fragment_news);
+
+        txtNews = findViewById(R.id.section_news);
+        clasicBtn  = findViewById(R.id.classicBtn);
+        diamondBtn = findViewById(R.id.diamondBtn);
+        ostBtn = findViewById(R.id.ostBtn);
+        generalBtn = findViewById(R.id.generalBtn);
+
+        pref = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
 
         RetrieveFeedTask rt = new RetrieveFeedTask();
         rt.execute(pref.getString("rss_url", "https://www.deutschlandfunk.de/die-nachrichten.353.de.rss"));
@@ -112,7 +119,6 @@ public class NewsFragment extends Fragment {
                 pref.getString("general_url", "http://fallout.fm:8000/falloutfm10.ogg"))
         );
 
-        return view;
     }
 
     private String uml(String str) {
@@ -177,13 +183,13 @@ public class NewsFragment extends Fragment {
         public void onClick(View view) {
             Button btn = (Button) view;
 
-            clasicBtn.setBackgroundColor(getResources().getColor(R.color.colorPrimaryDark));
+            clasicBtn.setBackgroundColor(getResources().getColor(R.color.colorPrimaryDarker));
             clasicBtn.setTextColor(getResources().getColor(R.color.colorAccent));
-            diamondBtn.setBackgroundColor(getResources().getColor(R.color.colorPrimaryDark));
+            diamondBtn.setBackgroundColor(getResources().getColor(R.color.colorPrimaryDarker));
             diamondBtn.setTextColor(getResources().getColor(R.color.colorAccent));
-            ostBtn.setBackgroundColor(getResources().getColor(R.color.colorPrimaryDark));
+            ostBtn.setBackgroundColor(getResources().getColor(R.color.colorPrimaryDarker));
             ostBtn.setTextColor(getResources().getColor(R.color.colorAccent));
-            generalBtn.setBackgroundColor(getResources().getColor(R.color.colorPrimaryDark));
+            generalBtn.setBackgroundColor(getResources().getColor(R.color.colorPrimaryDarker));
             generalBtn.setTextColor(getResources().getColor(R.color.colorAccent));
 
             if (mediaPlayer.isPlaying()) {
@@ -200,9 +206,64 @@ public class NewsFragment extends Fragment {
 
         @Override
         protected Void doInBackground(String... strings) {
-            mediaPlayer = MediaPlayer.create(getContext(), Uri.parse(strings[0]));
+            mediaPlayer = MediaPlayer.create(getApplicationContext(), Uri.parse(strings[0]));
             mediaPlayer.start();
             return null;
         }
+    }
+
+    @Override
+    public boolean onKeyUp(int keyCode, KeyEvent event) {
+        switch (keyCode) {
+            case KeyEvent.KEYCODE_K:
+                toClk(null);
+                return true;
+            case KeyEvent.KEYCODE_I:
+                toWho(null);
+                return true;
+            case KeyEvent.KEYCODE_J:
+                toMsg(null);
+                return true;
+            case KeyEvent.KEYCODE_M:
+                toArea(null);
+                return true;
+            default:
+                return super.onKeyUp(keyCode, event);
+        }
+    }
+
+    public void toClk(View view) {
+        Intent intent = new Intent(this, ClockActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+        startActivity(intent);
+    }
+    public void toWho(View view) {
+        Intent intent = new Intent(this, ContactActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+        startActivity(intent);
+    }
+    public void toMsg(View view) {
+        Intent intent = new Intent(this, MsgActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+        startActivity(intent);
+    }
+    public void toArea(View view) {
+        Intent intent = new Intent(this, AreaActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+        startActivity(intent);
+    }
+
+    class NotificationReceiver extends BroadcastReceiver {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            Log.d(getLocalClassName(), "broadcast");
+            if (intent.getBooleanExtra("EXIT", false)) finishAffinity();
+        }
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        finishAffinity();
     }
 }

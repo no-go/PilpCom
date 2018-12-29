@@ -1,43 +1,114 @@
-<?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorPrimaryDark" >
+    android:fitsSystemWindows="true"
+    android:background="@color/colorPrimaryDarker"
+    android:orientation="vertical"
+    android:keepScreenOn="true"
+    >
 
-    <org.osmdroid.views.MapView
+    <LinearLayout
+        android:orientation="horizontal"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:id="@+id/map"
-        android:scaleX="2"
-        android:scaleY="2" />
+        android:weightSum="5"
+        android:layout_height="wrap_content">
 
-    <ImageView
-        android:scaleType="centerCrop"
+        <Button
+            android:layout_weight="1"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:textSize="16dp"
+            android:fontFamily="@font/c64pro_mono"
+            android:textColor="@color/colorPrimary"
+            android:background="@android:color/transparent"
+            android:onClick="toClk"
+            android:text="@string/clk"
+            />
+        <Button
+            android:layout_weight="1"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:textSize="16dp"
+            android:fontFamily="@font/c64pro_mono"
+            android:textColor="@color/colorPrimary"
+            android:background="@android:color/transparent"
+            android:onClick="toWho"
+            android:text="@string/who"
+            />
+        <Button
+            android:layout_weight="1"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:textSize="16dp"
+            android:fontFamily="@font/c64pro_mono"
+            android:textColor="@color/colorPrimary"
+            android:background="@android:color/transparent"
+            android:onClick="toMsg"
+            android:text="@string/msg"
+            />
+        <Button
+            android:layout_weight="1"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:textSize="16dp"
+            android:fontFamily="@font/c64pro_mono"
+            android:textColor="@color/colorAccent"
+            android:background="@color/colorPrimaryDark"
+            android:text="@string/area"
+            />
+        <Button
+            android:layout_weight="1"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:textSize="16dp"
+            android:fontFamily="@font/c64pro_mono"
+            android:textColor="@color/colorPrimary"
+            android:background="@android:color/transparent"
+            android:onClick="toNews"
+            android:text="@string/news"
+            />
+    </LinearLayout>
+
+    <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@color/colorPrimaryDark"
-        android:id="@+id/swMap" />
+        android:layout_height="match_parent">
 
-    <ImageView
-        android:id="@+id/marker"
-        android:background="@mipmap/ic_launcher"
-        android:scaleType="center"
-        android:layout_gravity="center"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        <org.osmdroid.views.MapView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/map"
+            android:scaleX="2"
+            android:scaleY="2" />
 
-    <TextView
-        android:id="@+id/section_pos"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textColor="@color/colorAccent"
-        android:fontFamily="@font/c64pro_mono"
-        android:textSize="12dp"
-        android:layout_marginBottom="@dimen/activity_vertical_margin"
-        android:layout_marginEnd="@dimen/activity_horizontal_margin"
-        android:layout_marginStart="@dimen/activity_horizontal_margin"
-        android:layout_marginTop="@dimen/activity_vertical_margin"
-        android:paddingBottom="60dp" />
+        <ImageView
+            android:scaleType="centerCrop"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/colorPrimaryDark"
+            android:id="@+id/swMap" />
 
-</FrameLayout>
+        <ImageView
+            android:id="@+id/marker"
+            android:background="@mipmap/ic_launcher"
+            android:scaleType="center"
+            android:layout_gravity="center"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:id="@+id/section_pos"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/colorAccent"
+            android:fontFamily="@font/c64pro_mono"
+            android:textSize="12dp"
+            android:layout_marginBottom="@dimen/activity_vertical_margin"
+            android:layout_marginEnd="@dimen/activity_horizontal_margin"
+            android:layout_marginStart="@dimen/activity_horizontal_margin"
+            android:layout_marginTop="@dimen/activity_vertical_margin"
+            android:paddingBottom="60dp" />
+
+    </FrameLayout>
+
+</LinearLayout>
