@@ -1,6 +1,8 @@
 package de.digisocken.pilp_com;
 
+import android.app.Activity;
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
@@ -21,28 +23,35 @@ import java.util.ArrayList;
 
 public class ContactFragment extends Fragment {
 
-    private static final String ARG_SECTION_NUMBER = "section_number";
-    private int mParam1;
     private EntryAdapter entryAdapter;
     private ListView entryList;
     private SmsManager smsManager = SmsManager.getDefault();
 
-    public ContactFragment() { }
+    private String title;
+    private int page;
 
-    public static ContactFragment newInstance(int param1) {
+    // newInstance constructor for creating fragment with arguments
+    public static ContactFragment newInstance(int page, String title) {
         ContactFragment fragment = new ContactFragment();
         Bundle args = new Bundle();
-        args.putInt(ARG_SECTION_NUMBER, param1);
+        args.putInt("someInt", page);
+        args.putString("someTitle", title);
         fragment.setArguments(args);
         return fragment;
+    }
+
+    public ContactFragment() { }
+
+    @Override
+    public String toString() {
+        return title;
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getInt(ARG_SECTION_NUMBER);
-        }
+        page = getArguments().getInt("someInt", 0);
+        title = getArguments().getString("someTitle");
     }
 
     @Override
@@ -93,7 +102,7 @@ public class ContactFragment extends Fragment {
                  alertDialog.show();
              }
         });
-        Cursor phones = getActivity().getContentResolver().query(ContactsContract.CommonDataKinds.Phone.CONTENT_URI, null,null,null, null);
+        Cursor phones = container.getContext().getContentResolver().query(ContactsContract.CommonDataKinds.Phone.CONTENT_URI, null,null,null, null);
         while (phones.moveToNext()) {
             String name = phones.getString(phones.getColumnIndex(ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME));
             String phoneNumber = phones.getString(phones.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER));

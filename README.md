@@ -24,6 +24,10 @@ Names and design is different to the original app and interface. I not want any 
 
 - tool to build sms with default text blocks via an easy bluetooth control keyboard device
 
+## Get the App
+
+You can get a signed APK (4.4.4+) from [here](https://raw.githubusercontent.com/no-go/PilpCom/master/app/release/de.digisocken.pilp_com.apk)
+
 ## Screenshots
 
 Date, time, vibration detection.
@@ -35,6 +39,7 @@ Contacts are selectable to send sms or do a call.
 ![Who](img/who.jpg)
 
 Try to list the last messages. Non SMS messages needs special notifications access.
+
 ![Msg](img/msg.jpg)
 
 Display a OSM map in green. It tries to get GPS location, orientation and speed. Set the zoom factor in the preferences.

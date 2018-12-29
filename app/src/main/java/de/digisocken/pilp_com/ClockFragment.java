@@ -1,5 +1,6 @@
 package de.digisocken.pilp_com;
 
+import android.app.Activity;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
@@ -13,6 +14,7 @@ import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.os.Bundle;
 import android.os.Handler;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.text.format.DateFormat;
 import android.view.LayoutInflater;
@@ -28,8 +30,6 @@ public class ClockFragment extends Fragment {
     private static final int Y_LIMIT = 200;
     private static final int X_LIMIT = 200;
 
-    private static final String ARG_SECTION_NUMBER = "section_number";
-    private int mParam1;
     private TextView msgText;
     private TextView msgText2;
 
@@ -42,23 +42,46 @@ public class ClockFragment extends Fragment {
     Handler handler = new Handler();
     int delay = 500; //milliseconds
 
-    public ClockFragment() { }
+    private String title;
+    private int page;
 
-    public static ClockFragment newInstance(int param1) {
+    // newInstance constructor for creating fragment with arguments
+    public static ClockFragment newInstance(int page, String title) {
         ClockFragment fragment = new ClockFragment();
         Bundle args = new Bundle();
-        args.putInt(ARG_SECTION_NUMBER, param1);
+        args.putInt("someInt", page);
+        args.putString("someTitle", title);
         fragment.setArguments(args);
         return fragment;
+    }
+
+    public ClockFragment() { }
+
+    @Override
+    public String toString() {
+        return title;
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getInt(ARG_SECTION_NUMBER);
-        }
-        mSensorManager = (SensorManager) getActivity().getSystemService(Context.SENSOR_SERVICE);
+        page = getArguments().getInt("someInt", 0);
+        title = getArguments().getString("someTitle");
+    }
+
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+
+        handler.postDelayed(new Runnable(){
+            public void run(){
+                msgText.setText(DateFormat.format(getString(R.string.date_format2), new Date()));
+                msgText2.setText(DateFormat.format(getString(R.string.time_format), new Date()));
+                handler.postDelayed(this, delay);
+            }
+        }, delay);
+
+        mSensorManager = (SensorManager) getContext().getSystemService(Context.SENSOR_SERVICE);
         if (mSensorManager.getDefaultSensor(Sensor.TYPE_LINEAR_ACCELERATION) != null) {
             mSensor = mSensorManager.getDefaultSensor(Sensor.TYPE_LINEAR_ACCELERATION);
         }
@@ -79,14 +102,6 @@ public class ClockFragment extends Fragment {
         Drawable dr = new BitmapDrawable(getResources(), bm);
         clockLayout.setBackground(dr);
         canvas = new Canvas(bm);
-
-        handler.postDelayed(new Runnable(){
-            public void run(){
-                msgText.setText(DateFormat.format(getString(R.string.date_format2), new Date()));
-                msgText2.setText(DateFormat.format(getString(R.string.time_format), new Date()));
-                handler.postDelayed(this, delay);
-            }
-        }, delay);
 
         return view;
     }

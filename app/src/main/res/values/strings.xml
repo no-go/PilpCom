@@ -1,10 +1,5 @@
 <resources>
     <string name="app_name">PilpCom</string>
-    <string name="tab_text_1">Clk</string>
-    <string name="tab_text_2">Who</string>
-    <string name="tab_text_3">Msg</string>
-    <string name="tab_text_4">Area</string>
-    <string name="tab_text_5">News</string>
     <string name="action_settings">Settings</string>
     <string name="different">Different</string>
     <string name="rss_url">News RSS URL</string>
@@ -21,6 +16,7 @@
     <string name="diamond_radio">Swing 50th Radio</string>
     <string name="general_radio">General Twist</string>
     <string name="ost_radio">Orient Peak</string>
+    <string name="tab_news">News</string>
 
     <string-array name="quality_names">
         <item>outer conurbation area</item>

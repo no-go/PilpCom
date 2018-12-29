@@ -4,7 +4,6 @@
     android:layout_height="match_parent"
     android:background="@color/colorPrimaryDark"
     android:id="@+id/clockBack"
-    tools:context=".ClockFragment"
     android:orientation="vertical"
     android:weightSum="2">
 

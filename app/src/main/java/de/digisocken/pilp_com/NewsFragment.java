@@ -1,5 +1,7 @@
 package de.digisocken.pilp_com;
 
+import android.app.Activity;
+import android.content.Context;
 import android.content.SharedPreferences;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
@@ -30,8 +32,6 @@ import javax.xml.parsers.DocumentBuilderFactory;
 
 public class NewsFragment extends Fragment {
 
-    private static final String ARG_SECTION_NUMBER = "section_number";
-    private int mParam1;
     private TextView txtNews;
     public static SharedPreferences pref;
 
@@ -41,27 +41,36 @@ public class NewsFragment extends Fragment {
     Button generalBtn;
     MediaPlayer mediaPlayer;
 
-    private ArrayList<String> title;
+    private ArrayList<String> titles;
     private ArrayList<String> description;
 
-    public NewsFragment() { }
+    private String title;
+    private int page;
 
-    public static NewsFragment newInstance(int param1) {
+    // newInstance constructor for creating fragment with arguments
+    public static NewsFragment newInstance(int page, String title) {
         NewsFragment fragment = new NewsFragment();
         Bundle args = new Bundle();
-        args.putInt(ARG_SECTION_NUMBER, param1);
+        args.putInt("someInt", page);
+        args.putString("someTitle", title);
         fragment.setArguments(args);
         return fragment;
     }
 
     @Override
+    public String toString() {
+        return title;
+    }
+
+    public NewsFragment() { }
+
+    @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getInt(ARG_SECTION_NUMBER);
-        }
         mediaPlayer = new MediaPlayer();
         mediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
+        page = getArguments().getInt("someInt", 0);
+        title = getArguments().getString("someTitle");
     }
 
     @Override
@@ -80,9 +89,9 @@ public class NewsFragment extends Fragment {
         try {
             rt.get();
             String dummy = "";
-            for (int i=0; i<title.size(); i++) {
+            for (int i=0; i<titles.size(); i++) {
                 //dummy += "<b>" + title.get(i) + ":</b>\n" + description.get(i) + "<br/>\n<br/>\n";
-                dummy += uml(title.get(i)).toUpperCase() + "\n" + uml(description.get(i)) + "\n\n";
+                dummy += uml(titles.get(i)).toUpperCase() + "\n" + uml(description.get(i)) + "\n\n";
             }
             txtNews.setText(dummy);
             //txtNews.setText(Html.fromHtml(dummy));
@@ -120,7 +129,7 @@ public class NewsFragment extends Fragment {
     class RetrieveFeedTask extends AsyncTask<String, Void, String> {
 
         protected String doInBackground(String... urlsStr) {
-            title = new ArrayList<String>();
+            titles = new ArrayList<String>();
             description = new ArrayList<String>();
 
             try {
@@ -139,7 +148,7 @@ public class NewsFragment extends Fragment {
                     NodeList nameList = fstElmnt.getElementsByTagName("title");
                     Element nameElement = (Element) nameList.item(0);
                     nameList = nameElement.getChildNodes();
-                    title.add(((Node) nameList.item(0)).getNodeValue());
+                    titles.add(((Node) nameList.item(0)).getNodeValue());
 
                     NodeList websiteList = fstElmnt.getElementsByTagName("description");
                     Element websiteElement = (Element) websiteList.item(0);

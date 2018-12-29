@@ -3,8 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/colorPrimaryDark"
-    android:orientation="vertical"
-    tools:context=".NewsFragment">
+    android:orientation="vertical" >
 
     <Button
         android:id="@+id/classicBtn"

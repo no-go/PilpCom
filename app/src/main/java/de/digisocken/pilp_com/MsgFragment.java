@@ -1,6 +1,8 @@
 package de.digisocken.pilp_com;
 
+import android.app.Activity;
 import android.content.ContentResolver;
+import android.content.Context;
 import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.net.Uri;
@@ -24,30 +26,36 @@ import java.util.Set;
 
 public class MsgFragment extends Fragment {
 
-    private static final String ARG_SECTION_NUMBER = "section_number";
-    private int mParam1;
     private TextView msgText;
     public static SharedPreferences pref;
 
     Handler handler = new Handler();
     int delay = 10000; //milliseconds
+    private String title;
+    private int page;
+
+    // newInstance constructor for creating fragment with arguments
+    public static MsgFragment newInstance(int page, String title) {
+        MsgFragment fragment = new MsgFragment();
+        Bundle args = new Bundle();
+        args.putInt("someInt", page);
+        args.putString("someTitle", title);
+        fragment.setArguments(args);
+        return fragment;
+    }
 
     public MsgFragment() { }
 
-    public static MsgFragment newInstance(int param1) {
-        MsgFragment fragment = new MsgFragment();
-        Bundle args = new Bundle();
-        args.putInt(ARG_SECTION_NUMBER, param1);
-        fragment.setArguments(args);
-        return fragment;
+    @Override
+    public String toString() {
+        return title;
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getInt(ARG_SECTION_NUMBER);
-        }
+        page = getArguments().getInt("someInt", 0);
+        title = getArguments().getString("someTitle");
     }
 
     @Override

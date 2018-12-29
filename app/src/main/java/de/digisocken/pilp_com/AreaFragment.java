@@ -1,6 +1,7 @@
 package de.digisocken.pilp_com;
 
 import android.Manifest;
+import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
@@ -32,9 +33,10 @@ import java.util.Locale;
 
 
 public class AreaFragment extends Fragment implements LocationListener {
-    static public int GPSREFRESH = 500;
+    static public int GPSREFRESH = 400;
+    static final int LOCATION_PERMISSIONS_REQUEST = 23;
 
-    static final int MY_PERMISSIONS_REQUEST_READ_GPS = 23;
+    private static String PROVIDER;
     private LocationManager locationManager;
     public static SharedPreferences pref;
 
@@ -46,40 +48,37 @@ public class AreaFragment extends Fragment implements LocationListener {
     private int updateCount = 0;
     Canvas canvas;
 
-    private static final String ARG_SECTION_NUMBER = "section_number";
-    private int mParam1;
+    private String title;
+    private int page;
 
-    public AreaFragment() {
-        // Required empty public constructor
-    }
-
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @return A new instance of fragment AreaFragment.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static AreaFragment newInstance(int param1) {
+    // newInstance constructor for creating fragment with arguments
+    public static AreaFragment newInstance(int page, String title) {
         AreaFragment fragment = new AreaFragment();
         Bundle args = new Bundle();
-        args.putInt(ARG_SECTION_NUMBER, param1);
+        args.putInt("someInt", page);
+        args.putString("someTitle", title);
         fragment.setArguments(args);
         return fragment;
     }
 
     @Override
+    public String toString() {
+        return title;
+    }
+
+    public AreaFragment() {}
+
+
+    @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getInt(ARG_SECTION_NUMBER);
-        }
+        page = getArguments().getInt("someInt", 0);
+        title = getArguments().getString("someTitle");
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        pref = PreferenceManager.getDefaultSharedPreferences(getActivity());
+        pref = PreferenceManager.getDefaultSharedPreferences(container.getContext());
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_area, container, false);
 
@@ -91,26 +90,25 @@ public class AreaFragment extends Fragment implements LocationListener {
         //map.setBuiltInZoomControls(true);
         //map.setMultiTouchControls(true);
 
-        locationManager = (LocationManager) getActivity().getSystemService(Context.LOCATION_SERVICE);
-        if (ActivityCompat.checkSelfPermission(getContext(),
-                Manifest.permission.ACCESS_FINE_LOCATION)
-                != PackageManager.PERMISSION_GRANTED) {
-
-            // Should we show an explanation?
-            if (!ActivityCompat.shouldShowRequestPermissionRationale(getActivity(), Manifest.permission.ACCESS_FINE_LOCATION)) {
-                ActivityCompat.requestPermissions(
-                        getActivity(),
-                        new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
-                        MY_PERMISSIONS_REQUEST_READ_GPS
-                );
-            }
+        locationManager = (LocationManager) container.getContext().getSystemService(Context.LOCATION_SERVICE);
+        int fine = ActivityCompat.checkSelfPermission(container.getContext(), Manifest.permission.ACCESS_FINE_LOCATION);
+        if (fine != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(
+                    getActivity(),
+                    new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
+                    LOCATION_PERMISSIONS_REQUEST
+            );
+        } else {
+            PROVIDER = LocationManager.GPS_PROVIDER;
+            locationManager.requestLocationUpdates(
+                    PROVIDER,
+                    GPSREFRESH,
+                    0,
+                    (android.location.LocationListener) this
+            );
         }
-        locationManager.requestLocationUpdates(
-                LocationManager.GPS_PROVIDER,
-                GPSREFRESH,
-                100,
-                (android.location.LocationListener) this
-        );
+
+
 
         marker.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -163,30 +161,34 @@ public class AreaFragment extends Fragment implements LocationListener {
     }
 
     @Override
-    public void onStatusChanged(String s, int i, Bundle bundle) {
-
-    }
+    public void onStatusChanged(String s, int i, Bundle bundle) { }
 
     @Override
-    public void onProviderEnabled(String s) {
-
-    }
+    public void onProviderEnabled(String s) { }
 
     @Override
-    public void onProviderDisabled(String s) {
-
-    }
+    public void onProviderDisabled(String s) { }
 
     @Override
-    public void onRequestPermissionsResult(
-            int requestCode,
-            String permissions[],
-            int[] grantResults
-    ) {
+    public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {
         switch (requestCode) {
-            case MY_PERMISSIONS_REQUEST_READ_GPS: {
+            case LOCATION_PERMISSIONS_REQUEST: {
                 if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    // ??
+                    PROVIDER = LocationManager.GPS_PROVIDER;
+                    locationManager.requestLocationUpdates(
+                            PROVIDER,
+                            GPSREFRESH,
+                            0,
+                            (android.location.LocationListener) this
+                    );
+                } else {
+                    PROVIDER = LocationManager.NETWORK_PROVIDER;
+                    locationManager.requestLocationUpdates(
+                            PROVIDER,
+                            GPSREFRESH,
+                            0,
+                            (android.location.LocationListener) this
+                    );
                 }
                 return;
             }
