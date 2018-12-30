@@ -8,7 +8,7 @@
     <string name="date_format2">yyyy-MM-dd\nEEEE</string>
     <string name="time_format">HH:mm.ss</string>
     <string name="map_zoomlevel">Map zoomlevel</string>
-    <string name="chat">leave txt empty to call \'%s\'</string>
+    <string name="chat">leave text empty to call %s</string>
     <string name="ok">ok</string>
     <string name="cancel">cancel</string>
 
