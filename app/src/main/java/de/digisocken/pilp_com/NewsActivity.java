@@ -24,6 +24,7 @@ import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.ScrollView;
 import android.widget.TextView;
 
 import org.w3c.dom.Document;
@@ -52,6 +53,7 @@ public class NewsActivity extends AppCompatActivity {
 
     private ArrayList<String> titles;
     private ArrayList<String> description;
+    private ScrollView scrollView;
 
     @Override
     protected void onResume() {
@@ -88,6 +90,7 @@ public class NewsActivity extends AppCompatActivity {
         diamondBtn = findViewById(R.id.diamondBtn);
         ostBtn = findViewById(R.id.ostBtn);
         generalBtn = findViewById(R.id.generalBtn);
+        scrollView = findViewById(R.id.scrollViewNews);
 
         pref = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
 
@@ -113,7 +116,7 @@ public class NewsActivity extends AppCompatActivity {
                 pref.getString("diamond_url", "http://fallout.fm:8000/falloutfm6.ogg"))
         );
         ostBtn.setOnClickListener(new RadioOnClickListener(
-                pref.getString("ost_url", "http://fallout.fm:8000/falloutfm4.ogg"))
+                pref.getString("ost_url", "http://wackenradio-high.rautemusik.fm"))
         );
         generalBtn.setOnClickListener(new RadioOnClickListener(
                 pref.getString("general_url", "http://fallout.fm:8000/falloutfm10.ogg"))
@@ -226,6 +229,28 @@ public class NewsActivity extends AppCompatActivity {
                 return true;
             case KeyEvent.KEYCODE_M:
                 toArea(null);
+                return true;
+
+            case KeyEvent.KEYCODE_1:
+                clasicBtn.callOnClick();
+                return true;
+            case KeyEvent.KEYCODE_2:
+                diamondBtn.callOnClick();
+                return true;
+            case KeyEvent.KEYCODE_3:
+                ostBtn.callOnClick();
+                return true;
+            case KeyEvent.KEYCODE_4:
+                generalBtn.callOnClick();
+                return true;
+
+            case KeyEvent.KEYCODE_PAGE_UP:
+                int y = scrollView.getScrollY()-100;
+                if (y<0) y=0;
+                scrollView.smoothScrollTo(0, y);
+                return true;
+            case KeyEvent.KEYCODE_PAGE_DOWN:
+                scrollView.smoothScrollTo(0, scrollView.getScrollY()+100);
                 return true;
             default:
                 return super.onKeyUp(keyCode, event);

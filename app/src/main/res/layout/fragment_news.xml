@@ -18,7 +18,7 @@
             android:layout_weight="1"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:textSize="16dp"
+            android:textSize="14dp"
             android:fontFamily="@font/c64pro_mono"
             android:textColor="@color/colorPrimary"
             android:background="@android:color/transparent"
@@ -29,7 +29,7 @@
             android:layout_weight="1"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:textSize="16dp"
+            android:textSize="14dp"
             android:fontFamily="@font/c64pro_mono"
             android:textColor="@color/colorPrimary"
             android:background="@android:color/transparent"
@@ -40,7 +40,7 @@
             android:layout_weight="1"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:textSize="16dp"
+            android:textSize="14dp"
             android:fontFamily="@font/c64pro_mono"
             android:textColor="@color/colorPrimary"
             android:background="@android:color/transparent"
@@ -51,7 +51,7 @@
             android:layout_weight="1"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:textSize="16dp"
+            android:textSize="14dp"
             android:fontFamily="@font/c64pro_mono"
             android:textColor="@color/colorPrimary"
             android:background="@android:color/transparent"
@@ -62,7 +62,7 @@
             android:layout_weight="1"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:textSize="16dp"
+            android:textSize="14dp"
             android:fontFamily="@font/c64pro_mono"
             android:textColor="@color/colorAccent"
             android:background="@color/colorPrimaryDark"
@@ -146,7 +146,7 @@
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:id="@+id/scrollView" >
+        android:id="@+id/scrollViewNews" >
 
 
             <TextView
@@ -158,8 +158,10 @@
                 android:textColor="@color/colorAccent"
                 android:background="@color/colorPrimaryDark"
                 android:layout_marginBottom="@dimen/activity_vertical_margin"
-                android:layout_marginEnd="@dimen/activity_horizontal_margin"
-                android:layout_marginStart="@dimen/activity_horizontal_margin"
+                android:layout_marginEnd="0dp"
+                android:layout_marginStart="0dp"
+                android:paddingStart="@dimen/activity_vertical_margin"
+                android:paddingEnd="@dimen/activity_vertical_margin"
                 android:paddingBottom="60dp" />
 
     </ScrollView>

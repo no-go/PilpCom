@@ -25,6 +25,7 @@ import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 
@@ -65,6 +66,7 @@ public class ContactActivity extends AppCompatActivity {
         entryAdapter = new EntryAdapter(this);
         entryList = (ListView) findViewById(R.id.contactList);
         entryList.setAdapter(entryAdapter);
+
         entryList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
              @Override
              public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
@@ -73,12 +75,18 @@ public class ContactActivity extends AppCompatActivity {
                  LayoutInflater li = LayoutInflater.from(ContactActivity.this);
                  View promptsView = li.inflate(R.layout.contactaccess, null);
 
-                 AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(ContactActivity.this, R.style.AlertDialogCustom);
+                 AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(
+                         ContactActivity.this,
+                         R.style.AlertDialogCustom
+                 );
 
                  // set prompts.xml to alertdialog builder
                  alertDialogBuilder.setView(promptsView);
 
                  final EditText userInput = (EditText) promptsView.findViewById(R.id.userInput);
+                 ((TextView) promptsView.findViewById(R.id.textView1)).setText(
+                         getString(R.string.chat, item.title)
+                 );
 
                  // set dialog message
                  alertDialogBuilder
@@ -106,6 +114,7 @@ public class ContactActivity extends AppCompatActivity {
                  alertDialog.show();
              }
         });
+
         Cursor phones = getContentResolver().query(ContactsContract.CommonDataKinds.Phone.CONTENT_URI, null,null,null, null);
         while (phones.moveToNext()) {
             String name = phones.getString(phones.getColumnIndex(ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME));

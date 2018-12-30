@@ -21,6 +21,7 @@ import android.view.KeyEvent;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.ScrollView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -34,6 +35,7 @@ import java.util.Set;
 public class MsgActivity extends AppCompatActivity {
     private NotificationReceiver nReceiver;
     private TextView msgText;
+    private ScrollView scrollView;
     public static SharedPreferences pref;
 
     Handler handler = new Handler();
@@ -68,6 +70,7 @@ public class MsgActivity extends AppCompatActivity {
 
         pref = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
         msgText = findViewById(R.id.section_news);
+        scrollView = findViewById(R.id.scrollViewMsg);
 
         handler.postDelayed(new Runnable(){
             public void run(){
@@ -151,6 +154,15 @@ public class MsgActivity extends AppCompatActivity {
                 return true;
             case KeyEvent.KEYCODE_O:
                 toNews(null);
+                return true;
+
+            case KeyEvent.KEYCODE_PAGE_UP:
+                int y = scrollView.getScrollY()-100;
+                if (y<0) y=0;
+                scrollView.smoothScrollTo(0, y);
+                return true;
+            case KeyEvent.KEYCODE_PAGE_DOWN:
+                scrollView.smoothScrollTo(0, scrollView.getScrollY()+100);
                 return true;
             default:
                 return super.onKeyUp(keyCode, event);
