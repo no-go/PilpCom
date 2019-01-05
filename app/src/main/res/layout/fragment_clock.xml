@@ -1,17 +1,17 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/colorPrimaryDarker"
     android:keepScreenOn="true"
     android:orientation="vertical"
-    android:weightSum="2"
-    android:layout_gravity="center"
-    android:gravity="center_horizontal"
+    android:layout_gravity="left"
+    android:paddingLeft="@dimen/appleft"
     android:paddingTop="@dimen/apptop"
     >
 
     <LinearLayout
+        android:id="@+id/thetabs"
         android:orientation="horizontal"
         android:layout_width="@dimen/appwidth"
         android:weightSum="5"
@@ -79,10 +79,10 @@
     </LinearLayout>
 
     <TextView
-        android:layout_weight="1"
+        android:layout_below="@+id/thetabs"
         android:id="@+id/section_clock"
         android:layout_width="@dimen/appwidth"
-        android:layout_height="match_parent"
+        android:layout_height="130px"
         android:textColor="@color/colorAccent"
         android:fontFamily="@font/c64pro_mono"
         android:textAlignment="center"
@@ -93,36 +93,18 @@
         android:layout_marginTop="@dimen/activity_vertical_margin" />
 
     <TextView
-        android:layout_weight="1"
         android:id="@+id/section_clock2"
         android:layout_width="@dimen/appwidth"
-        android:layout_height="match_parent"
+        android:layout_height="130px"
         android:textColor="@color/colorAccent"
         android:fontFamily="@font/c64pro_mono"
         android:textAlignment="gravity"
         android:gravity="top|center_horizontal"
         android:textSize="26dp"
+        android:layout_below="@+id/section_clock"
         android:layout_marginBottom="@dimen/activity_vertical_margin"
         android:layout_marginEnd="@dimen/activity_horizontal_margin"
         android:layout_marginStart="@dimen/activity_horizontal_margin"
         android:layout_marginTop="@dimen/activity_vertical_margin" />
 
-    <android.support.design.widget.FloatingActionButton
-        android:id="@+id/fab"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:tint="@color/colorPrimary"
-        android:layout_gravity="end|top"
-        android:layout_margin="@dimen/fab_margin"
-        app:srcCompat="@android:drawable/ic_menu_preferences" />
-
-    <!-- android.support.design.widget.FloatingActionButton
-        android:id="@+id/fab2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:tint="@color/colorPrimary"
-        android:layout_gravity="start|bottom"
-        android:layout_margin="@dimen/fab_margin"
-        app:srcCompat="@android:drawable/ic_lock_power_off" / -->
-
-</LinearLayout>
+</RelativeLayout>

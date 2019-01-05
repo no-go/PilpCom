@@ -129,8 +129,7 @@ public class ClockActivity  extends AppCompatActivity {
         msgText2.setBackground(dr2);
         canvas2 = new Canvas(bm2);
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
+        msgText2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(ClockActivity.this, PreferencesActivity.class);
@@ -163,7 +162,7 @@ public class ClockActivity  extends AppCompatActivity {
                                 Math.abs(event.values[1]) +
                                 Math.abs(event.values[2])
                 ));
-                color = getResources().getColor(R.color.colorPrimaryDark);
+                color = getResources().getColor(R.color.colorPrimary);
                 p.setColor(color);
                 canvas1.drawLine(x1-5, 20+lastY1, x1, 20+y, p);
                 lastY1 = y;

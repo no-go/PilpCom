@@ -5,8 +5,8 @@
     android:background="@color/colorPrimaryDarker"
     android:orientation="vertical"
     android:keepScreenOn="true"
-    android:layout_gravity="center"
-    android:gravity="center_horizontal"
+    android:layout_gravity="left"
+    android:paddingLeft="@dimen/appleft"
     android:paddingTop="@dimen/apptop"
     >
 
