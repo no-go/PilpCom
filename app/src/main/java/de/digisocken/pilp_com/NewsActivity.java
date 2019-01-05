@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
+import android.graphics.drawable.Drawable;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.net.Uri;
@@ -185,21 +186,35 @@ public class NewsActivity extends AppCompatActivity {
         @Override
         public void onClick(View view) {
             Button btn = (Button) view;
+            int color = getResources().getColor(R.color.colorAccent2);
+            int color2 = getResources().getColor(android.R.color.transparent);
+            Drawable drawable = getResources().getDrawable(R.drawable.radio_selector);
 
-            clasicBtn.setBackgroundColor(getResources().getColor(R.color.colorPrimaryDarker));
-            clasicBtn.setTextColor(getResources().getColor(R.color.colorAccent));
-            diamondBtn.setBackgroundColor(getResources().getColor(R.color.colorPrimaryDarker));
-            diamondBtn.setTextColor(getResources().getColor(R.color.colorAccent));
-            ostBtn.setBackgroundColor(getResources().getColor(R.color.colorPrimaryDarker));
-            ostBtn.setTextColor(getResources().getColor(R.color.colorAccent));
-            generalBtn.setBackgroundColor(getResources().getColor(R.color.colorPrimaryDarker));
-            generalBtn.setTextColor(getResources().getColor(R.color.colorAccent));
+            /*
+            clasicBtn.setBackgroundColor(color2);
+            diamondBtn.setBackgroundColor(color2);
+            ostBtn.setBackgroundColor(color2);
+            generalBtn.setBackgroundColor(color2);
+            clasicBtn.setBackground(drawable);
+            diamondBtn.setBackground(drawable);
+            ostBtn.setBackground(drawable);
+            generalBtn.setBackground(drawable); */
+
+            clasicBtn.clearFocus();
+            diamondBtn.clearFocus();
+            ostBtn.clearFocus();
+            generalBtn.clearFocus();
+            clasicBtn.setTextColor(color);
+            diamondBtn.setTextColor(color);
+            ostBtn.setTextColor(color);
+            generalBtn.setTextColor(color);
 
             if (mediaPlayer.isPlaying()) {
                 mediaPlayer.stop();
             } else {
-                btn.setBackgroundColor(getResources().getColor(R.color.colorAccent));
-                btn.setTextColor(getResources().getColor(R.color.colorPrimaryDark));
+                //btn.setBackgroundColor(getResources().getColor(R.color.colorAccent));
+                btn.setBackground(drawable);
+                btn.setTextColor(getResources().getColor(R.color.colorAccent));
                 new PlayTask().execute(_station);
             }
         }
@@ -218,6 +233,13 @@ public class NewsActivity extends AppCompatActivity {
     @Override
     public boolean onKeyUp(int keyCode, KeyEvent event) {
         switch (keyCode) {
+            case KeyEvent.KEYCODE_DPAD_RIGHT:
+                toClk(null);
+                return true;
+            case KeyEvent.KEYCODE_DPAD_LEFT:
+                toArea(null);
+                return true;
+
             case KeyEvent.KEYCODE_K:
                 toClk(null);
                 return true;
@@ -250,7 +272,7 @@ public class NewsActivity extends AppCompatActivity {
                 scrollView.smoothScrollTo(0, y);
                 return true;
             case KeyEvent.KEYCODE_PAGE_DOWN:
-                scrollView.smoothScrollTo(0, scrollView.getScrollY()+100);
+                scrollView.smoothScrollTo(0, scrollView.getScrollY() + 100);
                 return true;
             default:
                 return super.onKeyUp(keyCode, event);

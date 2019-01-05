@@ -12,10 +12,10 @@
     <string name="ok">ok</string>
     <string name="cancel">cancel</string>
 
-    <string name="classic_radio">1 Classic Station</string>
-    <string name="diamond_radio">2 Swing 50th Radio</string>
-    <string name="ost_radio">3 Heavy Rock</string>
-    <string name="general_radio">4 General Twist</string>
+    <string name="classic_radio">Classic Station</string>
+    <string name="diamond_radio">Swing 50th Radio</string>
+    <string name="ost_radio">Heavy Rock</string>
+    <string name="general_radio">General Twist</string>
     <string name="clk">Stat</string>
     <string name="who">Inv</string>
     <string name="msg">Msg</string>

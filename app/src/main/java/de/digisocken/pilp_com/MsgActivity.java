@@ -143,6 +143,13 @@ public class MsgActivity extends AppCompatActivity {
     @Override
     public boolean onKeyUp(int keyCode, KeyEvent event) {
         switch (keyCode) {
+            case KeyEvent.KEYCODE_DPAD_RIGHT:
+                toArea(null);
+                return true;
+            case KeyEvent.KEYCODE_DPAD_LEFT:
+                toWho(null);
+                return true;
+
             case KeyEvent.KEYCODE_K:
                 toClk(null);
                 return true;

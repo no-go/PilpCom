@@ -23,6 +23,7 @@
             android:textColor="@color/colorPrimary"
             android:background="@android:color/transparent"
             android:onClick="toClk"
+            android:focusable="false"
             android:text="@string/clk"
             />
         <Button
@@ -33,6 +34,7 @@
             android:fontFamily="@font/c64pro_mono"
             android:textColor="@color/colorPrimary"
             android:background="@android:color/transparent"
+            android:focusable="false"
             android:onClick="toWho"
             android:text="@string/who"
             />
@@ -44,6 +46,7 @@
             android:fontFamily="@font/c64pro_mono"
             android:textColor="@color/colorPrimary"
             android:background="@android:color/transparent"
+            android:focusable="false"
             android:onClick="toMsg"
             android:text="@string/msg"
             />
@@ -56,6 +59,7 @@
             android:textColor="@color/colorPrimary"
             android:background="@android:color/transparent"
             android:onClick="toArea"
+            android:focusable="false"
             android:text="@string/area"
             />
         <Button
@@ -66,6 +70,7 @@
             android:fontFamily="@font/c64pro_mono"
             android:textColor="@color/colorAccent"
             android:background="@color/colorPrimaryDark"
+            android:focusable="false"
             android:text="@string/news"
             />
     </LinearLayout>
@@ -77,14 +82,14 @@
         android:layout_marginTop="@dimen/activity_vertical_margin"
         android:textSize="16dp"
         android:fontFamily="@font/c64pro_mono"
-        android:textColor="@color/colorAccent"
-        android:background="@color/colorPrimaryDarker"
+        android:textColor="@color/colorAccent2"
         android:text="@string/classic_radio"
         android:textAlignment="gravity"
         android:gravity="center_vertical"
         android:minHeight="0dp"
         android:paddingStart="@dimen/activity_horizontal_margin"
         android:paddingEnd="@dimen/activity_horizontal_margin"
+        android:background="@drawable/radio_selector"
         android:textAllCaps="false"
         android:layout_marginBottom="1dp"
         />
@@ -95,14 +100,14 @@
         android:layout_height="wrap_content"
         android:fontFamily="@font/c64pro_mono"
         android:textSize="16dp"
-        android:textColor="@color/colorAccent"
+        android:textColor="@color/colorAccent2"
         android:text="@string/diamond_radio"
         android:textAlignment="gravity"
         android:gravity="center_vertical"
         android:minHeight="0dp"
         android:paddingStart="@dimen/activity_horizontal_margin"
         android:paddingEnd="@dimen/activity_horizontal_margin"
-        android:background="@color/colorPrimaryDarker"
+        android:background="@drawable/radio_selector"
         android:textAllCaps="false"
         android:layout_marginBottom="1dp"
         />
@@ -113,14 +118,14 @@
         android:layout_height="wrap_content"
         android:fontFamily="@font/c64pro_mono"
         android:textSize="16dp"
-        android:textColor="@color/colorAccent"
+        android:textColor="@color/colorAccent2"
         android:text="@string/ost_radio"
         android:textAlignment="gravity"
         android:gravity="center_vertical"
         android:minHeight="0dp"
         android:paddingStart="@dimen/activity_horizontal_margin"
         android:paddingEnd="@dimen/activity_horizontal_margin"
-        android:background="@color/colorPrimaryDarker"
+        android:background="@drawable/radio_selector"
         android:textAllCaps="false"
         android:layout_marginBottom="1dp"
         />
@@ -131,14 +136,14 @@
         android:layout_height="wrap_content"
         android:fontFamily="@font/c64pro_mono"
         android:textSize="16dp"
-        android:textColor="@color/colorAccent"
+        android:textColor="@color/colorAccent2"
         android:text="@string/general_radio"
         android:textAlignment="gravity"
         android:gravity="center_vertical"
         android:minHeight="0dp"
         android:paddingStart="@dimen/activity_horizontal_margin"
         android:paddingEnd="@dimen/activity_horizontal_margin"
-        android:background="@color/colorPrimaryDarker"
+        android:background="@drawable/radio_selector"
         android:textAllCaps="false"
         android:layout_marginBottom="@dimen/activity_horizontal_margin"
         />

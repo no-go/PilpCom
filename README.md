@@ -10,7 +10,7 @@ Features:
 - get location and show a map
 - a single text only rss feed reader and internet radio player
 
-You can swith trough the views with android bluetooth keyboard via cursor keys or:
+You can switch through the function views with android bluetooth keyboard via cursor keys or:
 
 - **K** Clk (clock)
 - **I** Who (contacts)
@@ -18,9 +18,18 @@ You can swith trough the views with android bluetooth keyboard via cursor keys o
 - **M** Area (OSM map)
 - **O** News (RSS reader and internet radio)
 
-Names and design is different to the original app and interface. I not want any copyright trouble.
+Cursor key:
 
-## Todo
+- left/right to switch through "functions"
+- up/down to scroll or focus contact, message, news or radio sation "buttons"
+
+Enter: to select a contact or a radio station
+
+Tab: to switch focus on cancel or ok button (contact function for doing sms or call)
+
+Names and design is different to the original app and interface. I do not want any copyright trouble.
+
+## Todo ?
 
 - tool to build sms with default text blocks via an easy bluetooth control keyboard device
 

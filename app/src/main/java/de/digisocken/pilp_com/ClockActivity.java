@@ -194,6 +194,13 @@ public class ClockActivity  extends AppCompatActivity {
     @Override
     public boolean onKeyUp(int keyCode, KeyEvent event) {
         switch (keyCode) {
+            case KeyEvent.KEYCODE_DPAD_RIGHT:
+                toWho(null);
+                return true;
+            case KeyEvent.KEYCODE_DPAD_LEFT:
+                toNews(null);
+                return true;
+
             case KeyEvent.KEYCODE_I:
                 toWho(null);
                 return true;
