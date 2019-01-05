@@ -2,15 +2,17 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:fitsSystemWindows="true"
     android:background="@color/colorPrimaryDarker"
     android:orientation="vertical"
     android:keepScreenOn="true"
+    android:layout_gravity="center"
+    android:gravity="center_horizontal"
+    android:paddingTop="@dimen/apptop"
     >
 
     <LinearLayout
         android:orientation="horizontal"
-        android:layout_width="match_parent"
+        android:layout_width="@dimen/appwidth"
         android:weightSum="5"
         android:layout_height="wrap_content">
 
@@ -18,7 +20,7 @@
             android:layout_weight="1"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:textSize="14dp"
+            android:textSize="@dimen/tab_text_size"
             android:fontFamily="@font/c64pro_mono"
             android:textColor="@color/colorPrimary"
             android:background="@android:color/transparent"
@@ -29,7 +31,7 @@
             android:layout_weight="1"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:textSize="14dp"
+            android:textSize="@dimen/tab_text_size"
             android:fontFamily="@font/c64pro_mono"
             android:textColor="@color/colorPrimary"
             android:background="@android:color/transparent"
@@ -40,7 +42,7 @@
             android:layout_weight="1"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:textSize="14dp"
+            android:textSize="@dimen/tab_text_size"
             android:fontFamily="@font/c64pro_mono"
             android:textColor="@color/colorPrimary"
             android:background="@android:color/transparent"
@@ -51,7 +53,7 @@
             android:layout_weight="1"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:textSize="14dp"
+            android:textSize="@dimen/tab_text_size"
             android:fontFamily="@font/c64pro_mono"
             android:textColor="@color/colorAccent"
             android:background="@color/colorPrimaryDark"
@@ -61,7 +63,7 @@
             android:layout_weight="1"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:textSize="14dp"
+            android:textSize="@dimen/tab_text_size"
             android:fontFamily="@font/c64pro_mono"
             android:textColor="@color/colorPrimary"
             android:background="@android:color/transparent"
@@ -71,7 +73,7 @@
     </LinearLayout>
 
     <FrameLayout
-        android:layout_width="match_parent"
+        android:layout_width="@dimen/appwidth"
         android:layout_height="match_parent">
 
         <org.osmdroid.views.MapView

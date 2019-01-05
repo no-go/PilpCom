@@ -13,7 +13,7 @@
         android:layout_alignRight="@+id/line_body"
         android:text="title"
         android:fontFamily="@font/c64pro_mono"
-        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:textSize="15dp"
         android:background="@drawable/back_selector"
         android:textColor="@drawable/text_selector"
         />
@@ -29,6 +29,7 @@
         android:fontFamily="@font/c64pro_mono"
         android:layout_alignParentLeft="true"
         android:layout_alignParentRight="true"
+        android:textSize="12dp"
         android:background="@drawable/back_selector"
         android:textColor="@drawable/text_selector"
         />

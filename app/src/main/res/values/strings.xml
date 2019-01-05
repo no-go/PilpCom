@@ -5,7 +5,7 @@
     <string name="rss_url">News RSS URL</string>
     <string name="display_limit">Data display limit</string>
     <string name="date_format">yyyyMMdd HH:mm:ss</string>
-    <string name="date_format2">yyyy-MM-dd\nEEEE</string>
+    <string name="date_format2">EE yyyy-MM-dd</string>
     <string name="time_format">HH:mm.ss</string>
     <string name="map_zoomlevel">Map zoomlevel</string>
     <string name="chat">leave text empty to call %s</string>
@@ -13,7 +13,7 @@
     <string name="cancel">cancel</string>
 
     <string name="classic_radio">Classic Station</string>
-    <string name="diamond_radio">Swing 50th Radio</string>
+    <string name="diamond_radio">Swing Radio</string>
     <string name="ost_radio">Heavy Rock</string>
     <string name="general_radio">General Twist</string>
     <string name="clk">Stat</string>

@@ -35,8 +35,8 @@ import java.util.Locale;
 
 public class ClockActivity  extends AppCompatActivity {
     private NotificationReceiver nReceiver;
-    private static final int Y_LIMIT = 200;
-    private static final int X_LIMIT = 200;
+    private static final int Y_LIMIT = 100;
+    private static final int X_LIMIT = 100;
 
     private TextView msgText;
     private TextView msgText2;
@@ -45,8 +45,8 @@ public class ClockActivity  extends AppCompatActivity {
     private Sensor mSensor;
     private Sensor ambient;
     private MySensorListener sensorListener;
-    private Canvas canvas;
-    private LinearLayout clockLayout;
+    private Canvas canvas1;
+    private Canvas canvas2;
     private int level = -1;
     private int batTemp = -80;
 
@@ -96,8 +96,8 @@ public class ClockActivity  extends AppCompatActivity {
                 SimpleDateFormat dateFormat = new SimpleDateFormat(getString(R.string.date_format2), Locale.ENGLISH);
                 msgText.setText(dateFormat.format(new Date()));
                 msgText2.setText(DateFormat.format(getString(R.string.time_format), new Date()));
-                if (level>0) msgText.append("\n\nHP " + Integer.toString(level) + "/115");
-                if (batTemp>-80) msgText2.append("\n\n" + Integer.toString(batTemp) + "°C");
+                if (level>0) msgText.append("\nHP " + Integer.toString(level) + "/115");
+                if (batTemp>-80) msgText2.append("\n" + Integer.toString(batTemp) + "°C");
                 handler.postDelayed(this, delay);
             }
         }, delay);
@@ -117,13 +117,17 @@ public class ClockActivity  extends AppCompatActivity {
 
         msgText = findViewById(R.id.section_clock);
         msgText2 = findViewById(R.id.section_clock2);
-        clockLayout = findViewById(R.id.clockBack);
 
         Bitmap.Config conf = Bitmap.Config.RGB_565;
-        Bitmap bm = Bitmap.createBitmap(X_LIMIT, Y_LIMIT, conf);
-        Drawable dr = new BitmapDrawable(getResources(), bm);
-        clockLayout.setBackground(dr);
-        canvas = new Canvas(bm);
+        Bitmap bm1 = Bitmap.createBitmap(X_LIMIT, Y_LIMIT, conf);
+        Drawable dr1 = new BitmapDrawable(getResources(), bm1);
+        msgText.setBackground(dr1);
+        canvas1 = new Canvas(bm1);
+
+        Bitmap bm2 = Bitmap.createBitmap(X_LIMIT, Y_LIMIT, conf);
+        Drawable dr2 = new BitmapDrawable(getResources(), bm2);
+        msgText2.setBackground(dr2);
+        canvas2 = new Canvas(bm2);
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -138,8 +142,8 @@ public class ClockActivity  extends AppCompatActivity {
     class MySensorListener implements SensorEventListener {
         private int x1 = 5;
         private int x2 = 5;
-        private int lastY1 = 40;
-        private int lastY2 = 40;
+        private int lastY1 = 20;
+        private int lastY2 = 20;
         private int ticks = 0;
 
         @Override
@@ -150,7 +154,7 @@ public class ClockActivity  extends AppCompatActivity {
             if (event.sensor.getType() == Sensor.TYPE_MAGNETIC_FIELD) {
                 y = (int) Math.abs(2 * event.values[0]);
                 p.setColor(color);
-                canvas.drawLine(x2-5, 60+lastY2, x2, 60+y, p);
+                canvas2.drawLine(x2-5, 20+lastY2, x2, 20+y, p);
                 lastY2 = y;
                 x2+=5;
             } else {
@@ -161,7 +165,7 @@ public class ClockActivity  extends AppCompatActivity {
                 ));
                 color = getResources().getColor(R.color.colorPrimaryDark);
                 p.setColor(color);
-                canvas.drawLine(x1-5, 30+lastY1, x1, 30+y, p);
+                canvas1.drawLine(x1-5, 20+lastY1, x1, 20+y, p);
                 lastY1 = y;
                 x1+=5;
             }
@@ -172,7 +176,7 @@ public class ClockActivity  extends AppCompatActivity {
                 if (ticks>20) {
                     ticks=0;
                     p.setColor(getResources().getColor(R.color.colorPrimaryDarker));
-                    canvas.drawRect(0, 0, X_LIMIT, Y_LIMIT, p);
+                    canvas1.drawRect(0, 0, X_LIMIT, Y_LIMIT, p);
                 }
             }
 
@@ -182,10 +186,11 @@ public class ClockActivity  extends AppCompatActivity {
                 if (ticks>20) {
                     ticks=0;
                     p.setColor(getResources().getColor(R.color.colorPrimaryDarker));
-                    canvas.drawRect(0, 0, X_LIMIT, Y_LIMIT, p);
+                    canvas2.drawRect(0, 0, X_LIMIT, Y_LIMIT, p);
                 }
             }
-            clockLayout.invalidate();
+            msgText.invalidate();
+            msgText2.invalidate();
         }
         @Override
         public void onAccuracyChanged(Sensor sensor, int i) {}
