@@ -50,6 +50,7 @@ public class EntryAdapter extends BaseAdapter {
         TextView tb = (TextView) view.findViewById(R.id.line_body);
         tt.setText(theEntries.get(i).title);
         tb.setText(theEntries.get(i).body);
+
         if (i%2==0) {
             view.setBackgroundColor(ContextCompat.getColor(
                     activity.getApplicationContext(),
@@ -58,9 +59,10 @@ public class EntryAdapter extends BaseAdapter {
         } else {
             view.setBackgroundColor(ContextCompat.getColor(
                     activity.getApplicationContext(),
-                    R.color.colorPrimary
+                    R.color.colorPrimaryDarker
             ));
         }
+
         return view;
     }
 

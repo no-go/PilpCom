@@ -1,13 +1,14 @@
 package de.digisocken.pilp_com;
 
 import android.Manifest;
-import android.app.Activity;
+import android.content.BroadcastReceiver;
 import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
-import android.graphics.Color;
 import android.graphics.ColorMatrix;
 import android.graphics.ColorMatrixColorFilter;
 import android.graphics.Paint;
@@ -16,11 +17,17 @@ import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -32,12 +39,13 @@ import org.osmdroid.views.MapView;
 import java.util.Locale;
 
 
-public class AreaFragment extends Fragment implements LocationListener {
+public class AreaActivity extends AppCompatActivity implements LocationListener {
     static public int GPSREFRESH = 400;
     static final int LOCATION_PERMISSIONS_REQUEST = 23;
+    private NotificationReceiver nReceiver;
 
     private static String PROVIDER;
-    private LocationManager locationManager;
+
     public static SharedPreferences pref;
 
     private TextView posView;
@@ -48,59 +56,55 @@ public class AreaFragment extends Fragment implements LocationListener {
     private int updateCount = 0;
     Canvas canvas;
 
-    private String title;
-    private int page;
 
-    // newInstance constructor for creating fragment with arguments
-    public static AreaFragment newInstance(int page, String title) {
-        AreaFragment fragment = new AreaFragment();
-        Bundle args = new Bundle();
-        args.putInt("someInt", page);
-        args.putString("someTitle", title);
-        fragment.setArguments(args);
-        return fragment;
+    @Override
+    protected void onResume() {
+        super.onResume();
+        IntentFilter filter = new IntentFilter();
+        filter.addAction(PilpApp.BROADCAST_EXIT);
+        registerReceiver(nReceiver, filter);
     }
 
     @Override
-    public String toString() {
-        return title;
+    protected void onPause() {
+        super.onPause();
+        unregisterReceiver(nReceiver);
     }
-
-    public AreaFragment() {}
-
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        page = getArguments().getInt("someInt", 0);
-        title = getArguments().getString("someTitle");
-    }
 
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        pref = PreferenceManager.getDefaultSharedPreferences(container.getContext());
-        // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_area, container, false);
+        nReceiver = new NotificationReceiver();
 
-        map = view.findViewById(R.id.map);
-        swMap = view.findViewById(R.id.swMap);
-        posView = view.findViewById(R.id.section_pos);
-        marker = view.findViewById(R.id.marker);
+        pref = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+
+        requestWindowFeature(Window.FEATURE_NO_TITLE);
+        getWindow().setFlags(
+                WindowManager.LayoutParams.FLAG_FULLSCREEN,
+                WindowManager.LayoutParams.FLAG_FULLSCREEN
+        );
+        setContentView(R.layout.fragment_area);
+
+        map = findViewById(R.id.map);
+        swMap = findViewById(R.id.swMap);
+        posView = findViewById(R.id.section_pos);
+        marker = findViewById(R.id.marker);
         map.setTileSource(TileSourceFactory.MAPNIK);
         //map.setBuiltInZoomControls(true);
         //map.setMultiTouchControls(true);
 
-        locationManager = (LocationManager) container.getContext().getSystemService(Context.LOCATION_SERVICE);
-        int fine = ActivityCompat.checkSelfPermission(container.getContext(), Manifest.permission.ACCESS_FINE_LOCATION);
+        PilpApp.locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+        int fine = ActivityCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.ACCESS_FINE_LOCATION);
         if (fine != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(
-                    getActivity(),
+                    this,
                     new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
                     LOCATION_PERMISSIONS_REQUEST
             );
         } else {
             PROVIDER = LocationManager.GPS_PROVIDER;
-            locationManager.requestLocationUpdates(
+            PilpApp.locationManager.requestLocationUpdates(
                     PROVIDER,
                     GPSREFRESH,
                     0,
@@ -133,8 +137,6 @@ public class AreaFragment extends Fragment implements LocationListener {
                 swMap.setImageBitmap(b);
             }
         });
-
-        return view;
     }
 
     @Override
@@ -175,7 +177,7 @@ public class AreaFragment extends Fragment implements LocationListener {
             case LOCATION_PERMISSIONS_REQUEST: {
                 if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                     PROVIDER = LocationManager.GPS_PROVIDER;
-                    locationManager.requestLocationUpdates(
+                    PilpApp.locationManager.requestLocationUpdates(
                             PROVIDER,
                             GPSREFRESH,
                             0,
@@ -183,7 +185,7 @@ public class AreaFragment extends Fragment implements LocationListener {
                     );
                 } else {
                     PROVIDER = LocationManager.NETWORK_PROVIDER;
-                    locationManager.requestLocationUpdates(
+                    PilpApp.locationManager.requestLocationUpdates(
                             PROVIDER,
                             GPSREFRESH,
                             0,
@@ -226,7 +228,13 @@ public class AreaFragment extends Fragment implements LocationListener {
         // -------------------------------------------try a filter
         Paint p = new Paint();
         ColorMatrix cm = new ColorMatrix();
-        cm.setScale(0.75f,0.45f,0.10f,1);
+        if (Locale.getDefault().getLanguage().equals("ha") ) {
+            cm.setScale(0.00f, 0.25f, 0.60f, 1);
+        } else if (Locale.getDefault().getLanguage().equals("ig") ) {
+                cm.setScale(0.00f,0.65f,0.15f,1);
+        } else {
+            cm.setScale(0.75f,0.45f,0.10f,1);
+        }
         ColorMatrixColorFilter filter = new ColorMatrixColorFilter(cm);
         p.setColorFilter(filter);
         canvas.drawBitmap(bitmap, 0, 0, p);
@@ -248,5 +256,68 @@ public class AreaFragment extends Fragment implements LocationListener {
         paint.setColorFilter(f);
         c.drawBitmap(bmpOriginal, 0, 0, paint);
         return bmpGrayscale;
+    }
+
+    @Override
+    public boolean onKeyUp(int keyCode, KeyEvent event) {
+        switch (keyCode) {
+            case KeyEvent.KEYCODE_DPAD_RIGHT:
+                toNews(null);
+                return true;
+            case KeyEvent.KEYCODE_DPAD_LEFT:
+                toMsg(null);
+                return true;
+
+            case KeyEvent.KEYCODE_K:
+                toClk(null);
+                return true;
+            case KeyEvent.KEYCODE_I:
+                toWho(null);
+                return true;
+            case KeyEvent.KEYCODE_J:
+                toMsg(null);
+                return true;
+            case KeyEvent.KEYCODE_O:
+                toNews(null);
+                return true;
+            default:
+                return super.onKeyUp(keyCode, event);
+        }
+    }
+
+    public void toClk(View view) {
+        Intent intent = new Intent(this, ClockActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+        startActivity(intent);
+    }
+    public void toWho(View view) {
+        Intent intent = new Intent(this, ContactActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+        startActivity(intent);
+    }
+    public void toMsg(View view) {
+        Intent intent = new Intent(this, MsgActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+        startActivity(intent);
+    }
+    public void toNews(View view) {
+        Intent intent = new Intent(this, NewsActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+        startActivity(intent);
+    }
+
+    class NotificationReceiver extends BroadcastReceiver {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            Log.d(getLocalClassName(), "broadcast");
+            if (intent.getBooleanExtra("EXIT", false)) finishAffinity();
+        }
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        PilpApp.locationManager.removeUpdates(this);
+        finishAffinity();
     }
 }

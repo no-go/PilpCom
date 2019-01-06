@@ -1,35 +1,33 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/colorPrimaryDarker"
-    android:keepScreenOn="true"
     android:orientation="vertical"
+    android:keepScreenOn="true"
     android:layout_gravity="left"
     android:paddingLeft="@dimen/appleft"
     android:paddingTop="@dimen/apptop"
     >
 
     <LinearLayout
-        android:id="@+id/thetabs"
         android:orientation="horizontal"
         android:layout_width="@dimen/appwidth"
         android:weightSum="5"
         android:layout_height="wrap_content">
 
         <Button
-            android:id="@+id/ClkBtn1"
             android:layout_weight="1"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:textSize="@dimen/tab_text_size"
             android:fontFamily="@font/c64pro_mono"
-            android:textColor="@color/colorAccent"
-            android:background="@color/colorPrimaryDark"
+            android:textColor="@color/colorPrimary"
+            android:background="@android:color/transparent"
+            android:onClick="toClk"
             android:text="@string/clk"
             />
         <Button
-            android:id="@+id/WhoBtn1"
             android:layout_weight="1"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -41,19 +39,16 @@
             android:text="@string/who"
             />
         <Button
-            android:id="@+id/MsgBtn1"
             android:layout_weight="1"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:textSize="@dimen/tab_text_size"
             android:fontFamily="@font/c64pro_mono"
-            android:textColor="@color/colorPrimary"
-            android:background="@android:color/transparent"
-            android:onClick="toMsg"
+            android:textColor="@color/colorAccent"
+            android:background="@color/colorPrimaryDark"
             android:text="@string/msg"
             />
         <Button
-            android:id="@+id/AreaBtn1"
             android:layout_weight="1"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -65,7 +60,6 @@
             android:text="@string/area"
             />
         <Button
-            android:id="@+id/NewsBtn1"
             android:layout_weight="1"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -78,36 +72,24 @@
             />
     </LinearLayout>
 
-    <LinearLayout
-        android:layout_below="@+id/thetabs"
-        android:layout_alignStart="@id/thetabs"
-        android:layout_height="match_parent"
+    <ScrollView
         android:layout_width="@dimen/appwidth"
-        android:weightSum="2"
-        android:orientation="vertical">
+        android:layout_height="match_parent"
+        android:id="@+id/scrollViewMsg" >
 
-        <TextView
-            android:layout_weight="1"
-            android:id="@+id/section_clock"
-            android:layout_height="match_parent"
-            android:textColor="@color/colorAccent"
-            android:fontFamily="@font/c64pro_mono"
-            android:textAlignment="gravity"
-            android:gravity="center"
-            android:textSize="20dp"
-            android:layout_width="match_parent" />
+            <TextView
+                android:id="@+id/section_news"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@color/colorAccent"
+                android:fontFamily="@font/c64pro_mono"
+                android:textSize="12dp"
+                android:layout_marginBottom="@dimen/activity_vertical_margin"
+                android:layout_marginEnd="@dimen/activity_horizontal_margin"
+                android:layout_marginStart="@dimen/activity_horizontal_margin"
+                android:layout_marginTop="@dimen/activity_vertical_margin"
+                android:paddingBottom="60dp" />
 
-        <TextView
-            android:layout_weight="1"
-            android:id="@+id/section_clock2"
-            android:layout_height="match_parent"
-            android:textColor="@color/colorAccent"
-            android:fontFamily="@font/c64pro_mono"
-            android:textAlignment="gravity"
-            android:gravity="center"
-            android:textSize="26dp"
-            android:layout_width="match_parent" />
+    </ScrollView>
 
-    </LinearLayout>
-
-</RelativeLayout>
+</LinearLayout>

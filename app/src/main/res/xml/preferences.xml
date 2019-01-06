@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <PreferenceCategory android:title="@string/tab_news">
+    <PreferenceCategory android:title="@string/news">
         <EditTextPreference
             android:key="rss_url"
             android:inputType="text"
@@ -23,7 +23,7 @@
         <EditTextPreference
             android:key="ost_url"
             android:inputType="text"
-            android:defaultValue="http://fallout.fm:8000/falloutfm4.ogg"
+            android:defaultValue="http://wackenradio-high.rautemusik.fm"
             android:title="@string/ost_radio" />
 
         <EditTextPreference
