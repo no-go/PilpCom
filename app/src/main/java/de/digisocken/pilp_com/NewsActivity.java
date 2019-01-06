@@ -12,19 +12,15 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
-import android.support.design.widget.FloatingActionButton;
-import android.support.v4.app.ActivityCompat;
-import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Html;
 import android.util.Log;
 import android.view.KeyEvent;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
@@ -94,6 +90,28 @@ public class NewsActivity extends AppCompatActivity {
         scrollView = findViewById(R.id.scrollViewNews);
 
         pref = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+
+        // ------------------------------------------------layoutsize
+
+        int left = PilpApp.getPref("appleft", pref, PilpApp.appleft);
+        int top = PilpApp.getPref("apptop", pref, PilpApp.apptop);
+        int width = PilpApp.getPref("appwidth", pref, PilpApp.appwidth);
+
+        LinearLayout re = findViewById(R.id.block_news_main);
+        re.setPadding(left, top, re.getPaddingRight(), re.getPaddingBottom());
+
+        LinearLayout.LayoutParams lp1 = new LinearLayout.LayoutParams(
+                width, LinearLayout.LayoutParams.WRAP_CONTENT
+        );
+        LinearLayout ll1 = findViewById(R.id.thetabs);
+        ll1.setLayoutParams(lp1);
+
+        LinearLayout.LayoutParams lp2 = new LinearLayout.LayoutParams(
+                width, LinearLayout.LayoutParams.MATCH_PARENT
+        );
+        scrollView.setLayoutParams(lp2);
+
+
 
         RetrieveFeedTask rt = new RetrieveFeedTask();
         rt.execute(pref.getString("rss_url", "https://www.deutschlandfunk.de/die-nachrichten.353.de.rss"));

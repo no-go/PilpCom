@@ -8,9 +8,11 @@
     android:layout_gravity="left"
     android:paddingLeft="@dimen/appleft"
     android:paddingTop="@dimen/apptop"
+    android:id="@+id/block_area_main"
     >
 
     <LinearLayout
+        android:id="@+id/thetabs"
         android:orientation="horizontal"
         android:layout_width="@dimen/appwidth"
         android:weightSum="5"
@@ -73,6 +75,7 @@
     </LinearLayout>
 
     <FrameLayout
+        android:id="@+id/block_area"
         android:layout_width="@dimen/appwidth"
         android:layout_height="match_parent">
 

@@ -6,24 +6,23 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.provider.ContactsContract;
-import android.support.design.widget.FloatingActionButton;
-import android.support.v4.app.ActivityCompat;
-import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.telephony.SmsManager;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -35,6 +34,7 @@ public class ContactActivity extends AppCompatActivity {
     private EntryAdapter entryAdapter;
     private ListView entryList;
     private SmsManager smsManager = SmsManager.getDefault();
+    public static SharedPreferences pref;
 
     @Override
     protected void onResume() {
@@ -62,6 +62,7 @@ public class ContactActivity extends AppCompatActivity {
                 WindowManager.LayoutParams.FLAG_FULLSCREEN
         );
         setContentView(R.layout.fragment_contact);
+        pref = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
 
         entryAdapter = new EntryAdapter(this);
         entryList = (ListView) findViewById(R.id.contactList);
@@ -131,6 +132,23 @@ public class ContactActivity extends AppCompatActivity {
 
         entryAdapter.sort();
         entryAdapter.notifyDataSetChanged();
+
+        // ------------------------------------------------layoutsize
+
+        int left = PilpApp.getPref("appleft", pref, PilpApp.appleft);
+        int top = PilpApp.getPref("apptop", pref, PilpApp.apptop);
+        int width = PilpApp.getPref("appwidth", pref, PilpApp.appwidth);
+
+        LinearLayout re = findViewById(R.id.block_who_main);
+        re.setPadding(left, top, re.getPaddingRight(), re.getPaddingBottom());
+
+        LinearLayout.LayoutParams lp1 = new LinearLayout.LayoutParams(
+                width, LinearLayout.LayoutParams.WRAP_CONTENT
+        );
+        LinearLayout ll1 = findViewById(R.id.thetabs);
+        ll1.setLayoutParams(lp1);
+
+        entryList.setLayoutParams(lp1);
     }
 
 

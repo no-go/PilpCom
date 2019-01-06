@@ -17,18 +17,16 @@ import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
-import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.ActivityCompat;
-import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.KeyEvent;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import org.osmdroid.api.IMapController;
@@ -111,6 +109,28 @@ public class AreaActivity extends AppCompatActivity implements LocationListener 
                     (android.location.LocationListener) this
             );
         }
+
+        // ------------------------------------------------layoutsize
+
+        int left = PilpApp.getPref("appleft", pref, PilpApp.appleft);
+        int top = PilpApp.getPref("apptop", pref, PilpApp.apptop);
+        int width = PilpApp.getPref("appwidth", pref, PilpApp.appwidth);
+
+        LinearLayout re = findViewById(R.id.block_area_main);
+        re.setPadding(left, top, re.getPaddingRight(), re.getPaddingBottom());
+
+        LinearLayout.LayoutParams lp1 = new LinearLayout.LayoutParams(
+                width, LinearLayout.LayoutParams.WRAP_CONTENT
+        );
+        LinearLayout ll1 = findViewById(R.id.thetabs);
+        ll1.setLayoutParams(lp1);
+
+        LinearLayout.LayoutParams lp2 = new LinearLayout.LayoutParams(
+                width, LinearLayout.LayoutParams.MATCH_PARENT
+        );
+        FrameLayout ll2 = findViewById(R.id.block_area);
+        ll2.setLayoutParams(lp2);
+
 
 
 

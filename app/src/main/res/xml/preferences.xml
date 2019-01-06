@@ -34,22 +34,46 @@
 
     </PreferenceCategory>
 
+
+
+    <PreferenceCategory android:title="@string/size_and_pos">
+        <EditTextPreference
+            android:key="appwidth"
+            android:inputType="numberDecimal"
+            android:defaultValue="550"
+            android:numeric="integer"
+            android:title="@string/appwidth" />
+
+        <EditTextPreference
+            android:key="apptop"
+            android:inputType="numberDecimal"
+            android:defaultValue="30"
+            android:numeric="integer"
+            android:title="@string/apptop" />
+
+        <EditTextPreference
+            android:key="appleft"
+            android:inputType="numberDecimal"
+            android:defaultValue="30"
+            android:numeric="integer"
+            android:title="@string/appleft" />
+    </PreferenceCategory>
+
+
+
     <PreferenceCategory android:title="@string/different">
-
-    <EditTextPreference
-        android:key="display_limit"
-        android:inputType="numberDecimal"
-        android:defaultValue="25"
-        android:numeric="integer"
-        android:title="@string/display_limit" />
-
-    <ListPreference
-        android:key="zoomlevel"
-        android:defaultValue="17"
-        android:entries="@array/quality_names"
-        android:entryValues="@array/quality_values"
-        android:title="@string/map_zoomlevel" />
-
+        <EditTextPreference
+            android:key="display_limit"
+            android:inputType="numberDecimal"
+            android:defaultValue="25"
+            android:numeric="integer"
+            android:title="@string/display_limit" />
+        <ListPreference
+            android:key="zoomlevel"
+            android:defaultValue="17"
+            android:entries="@array/quality_names"
+            android:entryValues="@array/quality_values"
+            android:title="@string/map_zoomlevel" />
     </PreferenceCategory>
 
 </PreferenceScreen>

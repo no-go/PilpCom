@@ -4,9 +4,9 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
-import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
@@ -17,7 +17,7 @@ import android.hardware.SensorManager;
 import android.os.BatteryManager;
 import android.os.Bundle;
 import android.os.Handler;
-import android.support.design.widget.FloatingActionButton;
+import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.text.format.DateFormat;
 import android.util.Log;
@@ -26,6 +26,7 @@ import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import java.text.SimpleDateFormat;
@@ -37,6 +38,7 @@ public class ClockActivity  extends AppCompatActivity {
     private NotificationReceiver nReceiver;
     private static final int Y_LIMIT = 100;
     private static final int X_LIMIT = 100;
+    public static SharedPreferences pref;
 
     private TextView msgText;
     private TextView msgText2;
@@ -90,14 +92,15 @@ public class ClockActivity  extends AppCompatActivity {
                 WindowManager.LayoutParams.FLAG_FULLSCREEN
         );
         setContentView(R.layout.fragment_clock);
+        pref = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
 
-        handler.postDelayed(new Runnable(){
-            public void run(){
+        handler.postDelayed(new Runnable() {
+            public void run() {
                 SimpleDateFormat dateFormat = new SimpleDateFormat(getString(R.string.date_format2), Locale.ENGLISH);
                 msgText.setText(dateFormat.format(new Date()));
                 msgText2.setText(DateFormat.format(getString(R.string.time_format), new Date()));
-                if (level>0) msgText.append("\nHP " + Integer.toString(level) + "/115");
-                if (batTemp>-80) msgText2.append("\n" + Integer.toString(batTemp) + "°C");
+                if (level > 0) msgText.append("\nHP " + Integer.toString(level) + "/115");
+                if (batTemp > -80) msgText2.append("\n" + Integer.toString(batTemp) + "°C");
                 handler.postDelayed(this, delay);
             }
         }, delay);
@@ -136,6 +139,28 @@ public class ClockActivity  extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
+        // ------------------------------------------------layoutsize
+
+        int left = PilpApp.getPref("appleft", pref, PilpApp.appleft);
+        int top = PilpApp.getPref("apptop", pref, PilpApp.apptop);
+        int width = PilpApp.getPref("appwidth", pref, PilpApp.appwidth);
+
+        RelativeLayout re = findViewById(R.id.block_clock_main);
+        re.setPadding(left, top, re.getPaddingRight(), re.getPaddingBottom());
+
+        RelativeLayout.LayoutParams lp1 = new RelativeLayout.LayoutParams(
+                width, RelativeLayout.LayoutParams.WRAP_CONTENT
+        );
+        LinearLayout ll1 = findViewById(R.id.thetabs);
+        ll1.setLayoutParams(lp1);
+
+        RelativeLayout.LayoutParams lp2 = new RelativeLayout.LayoutParams(
+                width, RelativeLayout.LayoutParams.MATCH_PARENT
+        );
+        lp2.addRule(RelativeLayout.BELOW, R.id.thetabs);
+        LinearLayout ll2 = findViewById(R.id.block_clock);
+        ll2.setLayoutParams(lp2);
     }
 
     class MySensorListener implements SensorEventListener {

@@ -22,6 +22,11 @@
     <string name="area">Map</string>
     <string name="news">News</string>
 
+    <string name="size_and_pos">Size and position</string>
+    <string name="apptop">top padding</string>
+    <string name="appleft">left padding</string>
+    <string name="appwidth">width</string>
+
     <string-array name="quality_names">
         <item>outer conurbation area</item>
         <item>city</item>

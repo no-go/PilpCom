@@ -11,9 +11,6 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.preference.PreferenceManager;
-import android.support.design.widget.FloatingActionButton;
-import android.support.v4.app.ActivityCompat;
-import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.text.format.DateFormat;
 import android.util.Log;
@@ -21,6 +18,7 @@ import android.view.KeyEvent;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
@@ -99,6 +97,26 @@ public class MsgActivity extends AppCompatActivity {
                 handler.postDelayed(this, delay);
             }
         }, delay);
+
+        // ------------------------------------------------layoutsize
+
+        int left = PilpApp.getPref("appleft", pref, PilpApp.appleft);
+        int top = PilpApp.getPref("apptop", pref, PilpApp.apptop);
+        int width = PilpApp.getPref("appwidth", pref, PilpApp.appwidth);
+
+        LinearLayout re = findViewById(R.id.block_msg_main);
+        re.setPadding(left, top, re.getPaddingRight(), re.getPaddingBottom());
+
+        LinearLayout.LayoutParams lp1 = new LinearLayout.LayoutParams(
+                width, LinearLayout.LayoutParams.WRAP_CONTENT
+        );
+        LinearLayout ll1 = findViewById(R.id.thetabs);
+        ll1.setLayoutParams(lp1);
+
+        scrollView.setLayoutParams(lp1);
+
+
+
 
         ArrayList<String> smss = new ArrayList<>();
         readSms(smss,"content://sms/inbox");

@@ -1,5 +1,4 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/colorPrimaryDarker"
@@ -8,9 +7,11 @@
     android:layout_gravity="left"
     android:paddingLeft="@dimen/appleft"
     android:paddingTop="@dimen/apptop"
+    android:id="@+id/block_news_main"
     >
 
     <LinearLayout
+        android:id="@+id/thetabs"
         android:orientation="horizontal"
         android:layout_width="@dimen/appwidth"
         android:weightSum="5"
@@ -79,7 +80,7 @@
 
     <Button
         android:id="@+id/classicBtn"
-        android:layout_width="@dimen/appwidth"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/activity_vertical_margin"
         android:textSize="16dp"
@@ -98,7 +99,7 @@
 
     <Button
         android:id="@+id/diamondBtn"
-        android:layout_width="@dimen/appwidth"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:fontFamily="@font/c64pro_mono"
         android:textSize="16dp"
@@ -116,7 +117,7 @@
 
     <Button
         android:id="@+id/ostBtn"
-        android:layout_width="@dimen/appwidth"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:fontFamily="@font/c64pro_mono"
         android:textSize="16dp"
@@ -134,7 +135,7 @@
 
     <Button
         android:id="@+id/generalBtn"
-        android:layout_width="@dimen/appwidth"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:fontFamily="@font/c64pro_mono"
         android:textSize="16dp"

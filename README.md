@@ -10,7 +10,7 @@ Features:
 - list received sms and other messages with special rights
 - get location and show a map
 - a single text only rss feed reader and internet radio player
-- press on clock (the actual time) to set URLs (Radio and RSS), map zoom and message limit
+- press on clock (the actual time) to set URLs (Radio and RSS), map zoom, message limit, App width, left- and top padding
 
 You can switch through the function views with android bluetooth keyboard via cursor keys or:
 

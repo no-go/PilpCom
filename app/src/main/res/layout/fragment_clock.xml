@@ -1,13 +1,12 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/colorPrimaryDarker"
     android:keepScreenOn="true"
-    android:orientation="vertical"
     android:layout_gravity="left"
     android:paddingLeft="@dimen/appleft"
     android:paddingTop="@dimen/apptop"
+    android:id="@+id/block_clock_main"
     >
 
     <LinearLayout
@@ -79,6 +78,7 @@
     </LinearLayout>
 
     <LinearLayout
+        android:id="@+id/block_clock"
         android:layout_below="@+id/thetabs"
         android:layout_alignStart="@id/thetabs"
         android:layout_height="match_parent"
