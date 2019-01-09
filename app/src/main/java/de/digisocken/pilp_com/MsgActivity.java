@@ -1,5 +1,6 @@
 package de.digisocken.pilp_com;
 
+import android.app.Instrumentation;
 import android.content.BroadcastReceiver;
 import android.content.ContentResolver;
 import android.content.Context;
@@ -45,13 +46,35 @@ public class MsgActivity extends AppCompatActivity {
         IntentFilter filter = new IntentFilter();
         filter.addAction(PilpApp.BROADCAST_EXIT);
         registerReceiver(nReceiver, filter);
+        IntentFilter filter2 = new IntentFilter();
+        filter2.addAction(getString(R.string.BROADCASTMSG));
+        registerReceiver(receiver, filter2);
     }
 
     @Override
     protected void onPause() {
         super.onPause();
         unregisterReceiver(nReceiver);
+        unregisterReceiver(receiver);
     }
+
+    private BroadcastReceiver receiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            final String readMessage = intent.getStringExtra("data");
+            new Thread() {
+                public void run() {
+                    Instrumentation instr = new Instrumentation();
+                    if (readMessage.startsWith("u")) instr.sendKeyDownUpSync(KeyEvent.KEYCODE_DPAD_UP);
+                    if (readMessage.startsWith("d")) instr.sendKeyDownUpSync(KeyEvent.KEYCODE_DPAD_DOWN);
+                    if (readMessage.startsWith("l")) instr.sendKeyDownUpSync(KeyEvent.KEYCODE_DPAD_LEFT);
+                    if (readMessage.startsWith("r")) instr.sendKeyDownUpSync(KeyEvent.KEYCODE_DPAD_RIGHT);
+                    if (readMessage.startsWith("t")) instr.sendKeyDownUpSync(KeyEvent.KEYCODE_TAB);
+                    if (readMessage.startsWith("s")) instr.sendKeyDownUpSync(KeyEvent.KEYCODE_ENTER);
+                }
+            }.start();
+        }
+    };
 
     @Override
     public void onCreate(Bundle savedInstanceState) {

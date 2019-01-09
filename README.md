@@ -11,6 +11,9 @@ Features:
 - get location and show a map
 - a single text only rss feed reader and internet radio player
 - press on clock (the actual time) to set URLs (Radio and RSS), map zoom, message limit, App width, left- and top padding
+- alternative: bluetooth 2.0 UART to control the app
+
+Names and design is different to the original app and interface. I do not want any copyright trouble.
 
 You can switch through the function views with android bluetooth keyboard via cursor keys or:
 
@@ -29,7 +32,11 @@ Enter: to select a contact or a radio station
 
 Tab: to switch focus on cancel or ok button (contact function for doing sms or call)
 
-Names and design is different to the original app and interface. I do not want any copyright trouble.
+## bluetooth 2.0 UART
+
+Use [bluetooth 2 UART App](https://raw.githubusercontent.com/no-go/Bluetooth-2-UART/master/app/release/de.digisocken.bluetooth2uart.apk)
+and select your old bluetooth 2 uart device and pair it. This app forward the bytes as string
+to the Pilp-Com App. Pilp-Com simulate u,d,l,r as up,down,left,right and t as TAB and s as ENTER (select).
 
 ## Bug!!!
 
@@ -38,7 +45,7 @@ The app activitys are running in background. Use app details to stop the app!!
 ## Todo ?
 
 - tool to build sms with default text blocks via an easy bluetooth control keyboard device
-- alternative: bluetooth 2.0 UART to control the app
+- better display selected buttons CANCEL and OK
 
 ## Get the App
 

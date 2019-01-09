@@ -40,6 +40,7 @@
             android:theme="@style/AppTheme.NoActionBar">
 
             <intent-filter>
+                <action android:name="@string/BROADCASTMSG" />
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
@@ -48,19 +49,35 @@
         <activity android:name=".ContactActivity"
             android:launchMode="singleInstance"
             android:parentActivityName=".ClockActivity"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:theme="@style/AppTheme.NoActionBar" >
+            <intent-filter>
+                <action android:name="@string/BROADCASTMSG" />
+            </intent-filter>
+        </activity>
         <activity android:name=".MsgActivity"
             android:launchMode="singleInstance"
             android:parentActivityName=".ContactActivity"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:theme="@style/AppTheme.NoActionBar">
+            <intent-filter>
+                <action android:name="@string/BROADCASTMSG" />
+            </intent-filter>
+        </activity>
         <activity android:name=".AreaActivity"
             android:launchMode="singleInstance"
             android:parentActivityName=".MsgActivity"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:theme="@style/AppTheme.NoActionBar" >
+            <intent-filter>
+                <action android:name="@string/BROADCASTMSG" />
+            </intent-filter>
+        </activity>
         <activity android:name=".NewsActivity"
             android:launchMode="singleInstance"
             android:parentActivityName=".AreaActivity"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:theme="@style/AppTheme.NoActionBar" >
+            <intent-filter>
+                <action android:name="@string/BROADCASTMSG" />
+            </intent-filter>
+        </activity>
 
 
         <activity
