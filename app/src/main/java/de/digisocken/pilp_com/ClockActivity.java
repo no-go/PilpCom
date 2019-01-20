@@ -72,6 +72,12 @@ public class ClockActivity  extends AppCompatActivity {
             new Thread() {
                 public void run() {
                     Instrumentation instr = new Instrumentation();
+                    //if (readMessage.startsWith("k")) instr.sendKeyDownUpSync(KeyEvent.KEYCODE_K);
+                    if (readMessage.startsWith("i")) instr.sendKeyDownUpSync(KeyEvent.KEYCODE_I);
+                    if (readMessage.startsWith("j")) instr.sendKeyDownUpSync(KeyEvent.KEYCODE_J);
+                    if (readMessage.startsWith("m")) instr.sendKeyDownUpSync(KeyEvent.KEYCODE_M);
+                    if (readMessage.startsWith("o")) instr.sendKeyDownUpSync(KeyEvent.KEYCODE_O);
+
                     if (readMessage.startsWith("u")) instr.sendKeyDownUpSync(KeyEvent.KEYCODE_DPAD_UP);
                     if (readMessage.startsWith("d")) instr.sendKeyDownUpSync(KeyEvent.KEYCODE_DPAD_DOWN);
                     if (readMessage.startsWith("l")) instr.sendKeyDownUpSync(KeyEvent.KEYCODE_DPAD_LEFT);
