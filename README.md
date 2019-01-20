@@ -37,6 +37,7 @@ Tab: to switch focus on cancel or ok button (contact function for doing sms or c
 Use [bluetooth 2 UART App](https://raw.githubusercontent.com/no-go/Bluetooth-2-UART/master/app/release/de.digisocken.bluetooth2uart.apk)
 and select your old bluetooth 2 uart device and pair it. This app forward the bytes as string
 to the Pilp Com App. Pilp Com simulate UART chars u,d,l,r as up,down,left,right and t as TAB and s as ENTER (select).
+The k,i,j,m,o keys are simulated, too.
 
 ### Firmware
 
@@ -46,7 +47,7 @@ The bluetooth link LED is my orange power LED.
 
 I use 2 buttons: the TAB button sets PIN 3 to ground (t). The SELECT button sets PIN 4 to ground (s).
 I use a 25k potentiometer as function switch (0 .. 3.7V): it is connected to A1. It sends
-continusly the selected fuction via a UART char (k,i,j,m,o).
+continusly the selected function via a UART char (k,i,j,m,o).
 I use a rotation encoder (A to PIN 5, middle to ground, B to PIN 7) for the up (u) and down (d)
 UART signal.
 
@@ -88,4 +89,5 @@ Radio displays a RSS feed. You can set the url in preferences. Four internet rad
 ![news](img/news.jpg)
 
 Language Igbo: green layout.
+
 Language Hausa: blue layout.
