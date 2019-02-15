@@ -1,6 +1,9 @@
 package de.digisocken.pilp_com;
 
 import android.app.Activity;
+import android.content.SharedPreferences;
+import android.content.res.Configuration;
+import android.preference.PreferenceManager;
 import android.support.v4.content.ContextCompat;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,6 +13,7 @@ import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.Locale;
 
 public class EntryAdapter extends BaseAdapter {
     public ArrayList<ContactEntry> theEntries = new ArrayList<>();
@@ -53,12 +57,12 @@ public class EntryAdapter extends BaseAdapter {
 
         if (i%2==0) {
             view.setBackgroundColor(ContextCompat.getColor(
-                    activity.getApplicationContext(),
+                    activity,
                     R.color.colorPrimaryDark
             ));
         } else {
             view.setBackgroundColor(ContextCompat.getColor(
-                    activity.getApplicationContext(),
+                    activity,
                     R.color.colorPrimaryDarker
             ));
         }
