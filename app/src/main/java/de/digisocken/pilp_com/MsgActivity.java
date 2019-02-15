@@ -7,6 +7,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
+import android.content.res.Configuration;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
@@ -28,6 +29,7 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
 import java.util.HashSet;
+import java.util.Locale;
 import java.util.Set;
 
 
@@ -43,6 +45,12 @@ public class MsgActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
+        Locale locale = new Locale(pref.getString("colortheme", "en"));
+        Locale.setDefault(locale);
+        Configuration config = getResources().getConfiguration();
+        config.locale = locale;
+        getResources().updateConfiguration(config, getResources().getDisplayMetrics());
+
         IntentFilter filter = new IntentFilter();
         filter.addAction(PilpApp.BROADCAST_EXIT);
         registerReceiver(nReceiver, filter);

@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
+import android.content.res.Configuration;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Paint;
@@ -92,6 +93,7 @@ public class ClockActivity  extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
+
         IntentFilter filter = new IntentFilter();
         filter.addAction(PilpApp.BROADCAST_EXIT);
         registerReceiver(nReceiver, filter);
@@ -115,17 +117,24 @@ public class ClockActivity  extends AppCompatActivity {
 
         nReceiver = new NotificationReceiver();
 
+        pref = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+        Locale locale = new Locale(pref.getString("colortheme", "en"));
+        Locale.setDefault(locale);
+        Configuration config = getResources().getConfiguration();
+        config.locale = locale;
+        getResources().updateConfiguration(config, getResources().getDisplayMetrics());
+
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         getWindow().setFlags(
                 WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN
         );
         setContentView(R.layout.fragment_clock);
-        pref = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
 
         handler.postDelayed(new Runnable() {
             public void run() {
                 SimpleDateFormat dateFormat = new SimpleDateFormat(getString(R.string.date_format2), Locale.ENGLISH);
+
                 msgText.setText(dateFormat.format(new Date()));
                 msgText2.setText(DateFormat.format(getString(R.string.time_format), new Date()));
                 if (level > 0) msgText.append("\nHP " + Integer.toString(level) + "/115");

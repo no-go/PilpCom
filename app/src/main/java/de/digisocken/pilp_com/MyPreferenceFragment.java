@@ -1,8 +1,11 @@
 package de.digisocken.pilp_com;
 
 import android.content.SharedPreferences;
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.preference.PreferenceFragment;
+
+import java.util.Locale;
 
 public class MyPreferenceFragment extends PreferenceFragment implements SharedPreferences.OnSharedPreferenceChangeListener {
 
@@ -25,7 +28,14 @@ public class MyPreferenceFragment extends PreferenceFragment implements SharedPr
     }
 
     @Override
-    public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String s) {
-
+    public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
+        if (key.equals("colortheme")) {
+            String val = sharedPreferences.getString(key, "en");
+            Locale locale = new Locale(val);
+            Locale.setDefault(locale);
+            Configuration config = getActivity().getResources().getConfiguration();
+            config.locale = locale;
+            getActivity().getResources().updateConfiguration(config, getActivity().getResources().getDisplayMetrics());
+        }
     }
 }

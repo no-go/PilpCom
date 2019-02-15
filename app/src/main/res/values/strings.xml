@@ -27,6 +27,8 @@
     <string name="appleft">left padding</string>
     <string name="appwidth">width</string>
 
+    <string name="colortheme">Color Theme</string>
+
     <string-array name="quality_names">
         <item>outer conurbation area</item>
         <item>city</item>
@@ -34,6 +36,12 @@
         <item>neighborhood</item>
         <item>street</item>
         <item>bathroom</item>
+    </string-array>
+
+    <string-array name="color_names">
+        <item>amber</item>
+        <item>green phosphor</item>
+        <item>C64 blue</item>
     </string-array>
 
 </resources>

@@ -11,4 +11,10 @@
         <item>18</item>
     </string-array>
 
+    <string-array name="color_values">
+        <item>en</item>
+        <item>ig</item>
+        <item>ha</item>
+    </string-array>
+
 </resources>

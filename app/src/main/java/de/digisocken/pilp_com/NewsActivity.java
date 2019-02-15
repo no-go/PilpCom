@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
+import android.content.res.Configuration;
 import android.graphics.drawable.Drawable;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
@@ -33,6 +34,7 @@ import org.xml.sax.InputSource;
 
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Locale;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -80,6 +82,12 @@ public class NewsActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
+        Locale locale = new Locale(pref.getString("colortheme", "en"));
+        Locale.setDefault(locale);
+        Configuration config = getResources().getConfiguration();
+        config.locale = locale;
+        getResources().updateConfiguration(config, getResources().getDisplayMetrics());
+
         IntentFilter filter = new IntentFilter();
         filter.addAction(PilpApp.BROADCAST_EXIT);
         registerReceiver(nReceiver, filter);
