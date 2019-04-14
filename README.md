@@ -34,7 +34,7 @@ Tab: to switch focus on cancel or ok button (contact function for doing sms or c
 
 ## bluetooth 2.0 UART
 
-Use [bluetooth 2 UART App](https://raw.githubusercontent.com/no-go/Bluetooth-2-UART/master/app/release/de.digisocken.bluetooth2uart.apk)
+Use [bluetooth 2 UART App](https://raw.githubusercontent.com/no-go/Bluetooth-2-UART/master/Application/release/de.digisocken.bluetooth2uart.apk)
 and select your old bluetooth 2 uart device and pair it. This app forward the bytes as string
 to the Pilp Com App. Pilp Com simulate UART chars u,d,l,r as up,down,left,right and t as TAB and s as ENTER (select).
 The k,i,j,m,o keys are simulated, too.
