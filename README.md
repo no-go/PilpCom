@@ -53,6 +53,21 @@ UART signal.
 
 ![Sketch](sketch.jpg)
 
+### Firmware 2
+
+I add a 3.3V, GND and i2c Bus plug for additional use (without Smartphone or bluetooth).
+With this 2nd firmware you can add an i2c oled Display SSD1306 and i2c fm radio RDA5807M to
+the PilpCom. The additional control for the radio is:
+
+- poti as volume control
+- buttons for selecting preset radio stations
+- rotation encode for non automatic tune freq seek
+- if you set volume to the lowest level: buttons can be used to set hour/minutes of the clock
+
+Display: battery powerbar, rds radio station, freqency, clock, volume level, station signal
+
+![additional radio](radio.jpg)
+
 ## Bug!!!
 
 The app activitys are running in background. Use app details to stop the app!!
