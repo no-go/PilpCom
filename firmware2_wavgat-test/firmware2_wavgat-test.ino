@@ -1,9 +1,9 @@
 #include <SoftwareSerial.h>
 
 #include <Wire.h>
-#include "radio.h"
-#include "RDA5807M.h"
-#include "RDSParser.h"
+#include <radio.h>
+#include <RDA5807M.h>
+#include <RDSParser.h>
 
 #include <MsTimer2.h>
 
@@ -129,7 +129,7 @@ void loop() {
   radio.checkRDS();
   potidelay++;
   changes = false;
-  if (potidelay%2048 == 0) {
+  if (potidelay%1024 == 0) {
     mySerial.print(function);
     
     vol1 = radio.getVolume();
@@ -143,6 +143,10 @@ void loop() {
       oled.setCursor(0,0);
       oled.print(timestr);
       
+      oled.setTextSize(1);
+      oled.setCursor(52,24);
+      oled.print(&timestr[6]);
+      
     } else {
       
       oled.setTextSize(1);
@@ -151,7 +155,7 @@ void loop() {
       readVcc();
       oled.drawRect(0, 0, 17, 12, WHITE);
       oled.drawRect(17, 4, 2, 4, WHITE);
-      oled.fillRect(2, 2, map(vcc, 3600, 4095, 1, 13), 8, WHITE);
+      oled.fillRect(2, 2, map(vcc, 3900, 4095, 1, 13), 8, WHITE);
   
       // display time
       oled.setCursor(41,0);
