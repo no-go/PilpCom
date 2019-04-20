@@ -66,6 +66,8 @@ the PilpCom. The additional control for the radio is:
 
 Display: battery powerbar, rds radio station, freqency, clock, volume level, station signal
 
+WAVGAT test radio: powerbar improvment for WAVGAT pro mini, small sound visualizer
+
 ![additional radio](radio.jpg)
 
 ## Bug!!!

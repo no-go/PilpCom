@@ -20,11 +20,14 @@ const int pin_SELECT = 4;
 const int pin_A      = 5;
 const int pin_B      = 7;
 int sensorLR         = A1;
-const int VCCMESURE  = A0;
+const int VCCMESURE  = A0; // I try to use a 10k + 28k Resistor, to get 1.1V from 4.2 on A0, but mesure internal on WAVGAT is with stupid
+const int SOUNDIN    = A2; // Visualisation Sound in
 
 #define SERIAL_SPEED  9600
+#define STOREAGE      16
 
 int func_val = 650;
+int dati = 0;
 
 bool logg[8] = {0,0,0,0, 0,0,0,0};
 int tick = 0;
@@ -40,6 +43,70 @@ int vol1 = 0;
 int vol2 = 0;
 
 char function[] = "k";
+
+struct Midways {
+  byte _val[STOREAGE];
+  int  _nxt;
+  byte _max;
+  byte _min;
+
+  Midways() {
+    _nxt = 0;
+    for (int i=0; i<STOREAGE; ++i) { 
+      _val[i] = 128;
+    }
+  }
+
+  void add(byte val) {
+    _val[_nxt] = val;
+    _nxt++;
+    if (_nxt == STOREAGE) {
+      _nxt = 0;
+    }
+  }
+
+  byte last() {
+    int l = _nxt -1;
+    if (l < 0) l += STOREAGE;
+    return _val[l];
+  }
+
+  byte midget() {
+    int mid = 0;
+    _min = 255;
+    _max = 0;
+    for (int i=0; i<STOREAGE; ++i) {
+      if (_val[i] > _max) _max=_val[i];
+      if (_val[i] < _min) _min=_val[i];
+      mid += _val[i];
+    }
+    
+    return (mid/STOREAGE);
+  }
+
+  void draw(int x, int y) {
+    int id = _nxt-1;
+    byte mid = midget();
+    
+    byte lastx,lasty;
+    byte dx = x + STOREAGE;
+    short dy = y - (_val[id] - mid);
+    
+    if (id < 0) id += STOREAGE;
+    for (int i=0; i<STOREAGE; ++i) {
+      lastx = dx;
+      lasty = dy;
+      
+      dx = x+STOREAGE-i;
+      dy = y - (_val[id] - mid);
+      if (dy < 0) dy = 0;
+      if (dy > 31) dy = 31;
+      oled.drawLine(lastx, lasty, dx, dy, WHITE); 
+      id--;
+      if (id < 0) id += STOREAGE;
+    }
+  }
+} daten;
 
 int idx = 1;
 RADIO_FREQ preset[] = {
@@ -69,6 +136,8 @@ void readVcc() {
   // 1023=1.1 V internal voltage is maximum. need voltage devider to get 1.1V instead of 4.2 on pin A0
   vcc = analogRead(VCCMESURE);
   analogReference(DEFAULT);
+  if (vcc > 3970) vcc = 3970;
+  if (vcc < 3920) vcc = 3920;
 }
 
 void DisplayServiceName(char *name) {
@@ -99,6 +168,7 @@ void setup() {
   pinMode(pin_A, INPUT_PULLUP);
   pinMode(pin_B, INPUT_PULLUP);
   pinMode(VCCMESURE, INPUT);
+  pinMode(SOUNDIN, INPUT);
   
   mySerial.println("at+namePilpCOM");
   delay(500);
@@ -155,7 +225,7 @@ void loop() {
       readVcc();
       oled.drawRect(0, 0, 17, 12, WHITE);
       oled.drawRect(17, 4, 2, 4, WHITE);
-      oled.fillRect(2, 2, map(vcc, 3900, 4095, 1, 13), 8, WHITE);
+      oled.fillRect(2, 2, map(vcc, 3920, 3970, 1, 13), 8, WHITE);
   
       // display time
       oled.setCursor(41,0);
@@ -184,12 +254,17 @@ void loop() {
   
       // display radio freq
       oled.setCursor(90,24);
-      oled.print(((float)radio.getFrequency())/100.0);    
+      oled.print(((float)radio.getFrequency())/100.0);
+
+      // display audio
+      daten.draw(56, 24);
     }
     oled.display();    
   }
   
   func_val = analogRead(sensorLR);
+  dati = analogRead(SOUNDIN);
+  daten.add(dati/16);
   vol2 = 15 - (func_val/256);
   valA = digitalRead(pin_A);
   valB = digitalRead(pin_B);
@@ -276,8 +351,4 @@ void loop() {
     }    
   }    
   
-  //delay(250);
-
-  //if (mySerial.available()) Serial.write(mySerial.read());
-  //if (Serial.available()) mySerial.write(Serial.read());
 }
