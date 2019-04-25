@@ -182,7 +182,7 @@ void setup() {
   radio.init();
   radio.setBandFrequency(RADIO_BAND_FMWORLD, preset[idx]);
   delay(100);
-  radio.setMono(false);
+  radio.setMono(true);
   radio.setMute(false);
   radio.attachReceiveRDS(RDS_process);
   rds.attachServicenNameCallback(DisplayServiceName);
@@ -199,13 +199,21 @@ void loop() {
   radio.checkRDS();
   potidelay++;
   changes = false;
-  if (potidelay%1024 == 0) {
-    mySerial.print(function);
-    
+  if (potidelay%256 == 0) {
+    func_val = analogRead(sensorLR);
+    vol2 = 15 - (func_val/256);
+   
     vol1 = radio.getVolume();
-    if (vol1 != vol2) radio.setVolume(vol2);
+    if (vol1 != vol2) {
+      radio.setVolume(vol2);
+      if (vol2<1) {
+        radio.setMute(true);
+      } else {
+        radio.setMute(false);
+      }
+    }
 
-    oled.clearDisplay();
+    if (potidelay%2048 == 0) oled.clearDisplay();
     if (idx == 0) {
       
       oled.setTextSize(4);
@@ -262,10 +270,8 @@ void loop() {
     oled.display();    
   }
   
-  func_val = analogRead(sensorLR);
   dati = analogRead(SOUNDIN);
   daten.add(dati/16);
-  vol2 = 15 - (func_val/256);
   valA = digitalRead(pin_A);
   valB = digitalRead(pin_B);
   
@@ -295,15 +301,30 @@ void loop() {
   }
 
   if (func_val>3800) {
-    function[0] = 'o';
+    if (function[0] != 'o') {
+      function[0] = 'o';
+      mySerial.print(function);
+    }
   } else if (func_val>3200) {
-    function[0] = 'm';
+    if (function[0] != 'm') {
+      function[0] = 'm';
+      mySerial.print(function);
+    }
   } else if (func_val>2600) {
-    function[0] = 'j';
+    if (function[0] != 'j') {
+      function[0] = 'j';
+      mySerial.print(function);
+    }
   } else if (func_val>2000) {
-    function[0] = 'i';
-  } else {
-    function[0] = 'k';
+    if (function[0] != 'i') {
+      function[0] = 'i';
+      mySerial.print(function);
+    }
+  } else if (func_val<=2000) {
+    if (function[0] != 'k') {
+      function[0] = 'k';
+      mySerial.print(function);
+    }
   }
 
 
